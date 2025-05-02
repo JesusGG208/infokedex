@@ -8,8 +8,13 @@ class EvolutionChain(models.Model):
     chain_id = models.IntegerField(unique=True)  # ID de la PokeAPI
 
     def __str__(self):
-        return f"Evolution Chain {self.chain_id}"
+        return f"Cadena Evolutiva {self.chain_id}"
 
+class Type(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+
+    def __str__(self):
+        return self.name
 
 class Pokemon(models.Model):
     """
@@ -17,8 +22,8 @@ class Pokemon(models.Model):
     """
     name = models.CharField(max_length=100, unique=True)
     pokedex_id = models.IntegerField(unique=True)
-    primary_type = models.CharField(max_length=100)
-    secondary_type = models.CharField(max_length=100, null=True, blank=True)
+    primary_type = models.ForeignKey(Type, on_delete=models.PROTECT)
+    secondary_type = models.ForeignKey(Type, on_delete=models.PROTECT, null=True, blank=True)
     height = models.IntegerField()
     weight = models.IntegerField()
     sprite_url = models.URLField()
