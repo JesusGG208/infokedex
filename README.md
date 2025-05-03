@@ -39,7 +39,7 @@ Los recursos que utilizaré serán los siguientes:
 El desarrollo del proyecto tendrá una duración aproximada de 3 meses, 
 siguiendo estas fases:
 1. Planificación y estructura de la página
-2. Desarrollo del Backend con y Frontend Django
+2. Desarrollo del Backend y Frontend con Django
 3. Implementación de Docker y Django REST Framework
 4. Pruebas finales
 
