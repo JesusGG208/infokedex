@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView, TemplateView, DetailView
 
-from pokemon.models import Pokemon
+from pokemon.models import Pokemon, EvolutionChain
 
 
 # Create your views here.
@@ -17,3 +17,8 @@ class PokemonDetailView(DetailView):
     model = Pokemon
     template_name = "pokemon_detail.html"
     context_object_name = "pokemon"
+
+class EvolutiveChainListView(ListView):
+    model = EvolutionChain
+    template_name = "ev_chain_list.html"
+    context_object_name = "ev_chain"
