@@ -1,7 +1,5 @@
 # Infokédex
 
----
-
 ## Autor del Proyecto
 Jesús G.
 
@@ -57,8 +55,6 @@ los compara según las estadísticas de cada uno.
 
 ## Posibles mejoras al proyecto (“Posibles mejoras futuras”)
 Por ahora no hay ninguna pensada de cara al futuro.
-
----
 
 ## Bibliografía
 - [PokéAPI](https://pokeapi.co/)
