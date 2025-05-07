@@ -1,67 +1,135 @@
+from django.core.management.base import BaseCommand
+from pokemon.models import Pokemon, Type, PokemonType, Ability, PokemonAbility, Evolution
 import requests
-from pokemon.models import Pokemon, Type, PokemonType, Ability, PokemonAbility
+import time
 
+class Command(BaseCommand):
+    help = 'Importa Pokémon desde PokéAPI a la base de datos'
 
-def fetch_pokemon_data(pokemon_id):
-    # Datos básicos del Pokémon
-    pokemon_url = f"https://pokeapi.co/api/v2/pokemon/{pokemon_id}/"
-    pokemon_data = requests.get(pokemon_url).json()
+    def handle(self, *args, **options):
+        def get_spanish_name(api_data, field="names"):
+            try:
+                return next(
+                    item['name'] for item in api_data.get(field, [])
+                    if item['language']['name'] == 'es'
+                )
+            except StopIteration:
+                return api_data['name']
 
-    # Datos de la especie (para la descripción)
-    species_url = f"https://pokeapi.co/api/v2/pokemon-species/{pokemon_id}/"
-    species_data = requests.get(species_url).json()
+        def fetch_pokemon_data(pokemon_id):
+            try:
+                # Datos básicos
+                pokemon_data = requests.get(f"https://pokeapi.co/api/v2/pokemon/{pokemon_id}/", timeout=10).json()
+                species_data = requests.get(f"https://pokeapi.co/api/v2/pokemon-species/{pokemon_id}/", timeout=10).json()
 
-    # Buscar la primera descripción en español
-    description = None
-    for entry in species_data["flavor_text_entries"]:
-        if entry["language"]["name"] == "es":
-            description = entry["flavor_text"].replace("\n", " ").replace("\f", " ")
-            break
+                # Traducción
+                name_es = get_spanish_name(species_data)
+                description_es = next(
+                    (entry['flavor_text'].replace('\n', ' ').replace('\f', ' ')
+                     for entry in species_data['flavor_text_entries']
+                     if entry['language']['name'] == 'es'),
+                    None
+                )
 
-    # Crear o actualizar el Pokémon
-    pokemon, created = Pokemon.objects.update_or_create(
-        pokedex_id=pokemon_id,
-        defaults={
-            "name": pokemon_data["name"],
-            "height": pokemon_data["height"],
-            "weight": pokemon_data["weight"],
-            "hp": pokemon_data["stats"][0]["base_stat"],
-            "attack": pokemon_data["stats"][1]["base_stat"],
-            "defense": pokemon_data["stats"][2]["base_stat"],
-            "special_attack": pokemon_data["stats"][3]["base_stat"],
-            "special_defense": pokemon_data["stats"][4]["base_stat"],
-            "speed": pokemon_data["stats"][5]["base_stat"],
-            "sprite_default": pokemon_data["sprites"]["front_default"],
-            "sprite_shiny": pokemon_data["sprites"]["front_shiny"],
-            "description": description,
-            "is_legendary": species_data["is_legendary"],
-            "is_mythical": species_data["is_mythical"],
-            "generation": int(species_data["generation"]["url"].split("/")[-2]),
-        }
-    )
+                # Sprites del artwork oficial
+                artwork = pokemon_data['sprites']['other']['official-artwork']
+                artwork_default = artwork.get('front_default')
+                artwork_shiny = artwork.get('front_shiny')
 
-    # Procesar tipos
-    for type_data in pokemon_data["types"]:
-        type_name = type_data["type"]["name"]
-        type_obj, _ = Type.objects.get_or_create(name=type_name)
-        PokemonType.objects.get_or_create(
-            pokemon=pokemon,
-            type=type_obj,
-            slot=type_data["slot"]
-        )
+                # Crear o actualizar Pokémon
+                stats = {stat['stat']['name']: stat['base_stat'] for stat in pokemon_data['stats']}
 
-    # Procesar habilidades
-    for ability_data in pokemon_data["abilities"]:
-        ability_name = ability_data["ability"]["name"]
-        ability_obj, _ = Ability.objects.get_or_create(name=ability_name)
-        PokemonAbility.objects.get_or_create(
-            pokemon=pokemon,
-            ability=ability_obj,
-            is_hidden=ability_data["is_hidden"]
-        )
+                pokemon, _ = Pokemon.objects.update_or_create(
+                    pokedex_id=pokemon_id,
+                    defaults={
+                        'name': name_es,
+                        'height': pokemon_data['height'],
+                        'weight': pokemon_data['weight'],
+                        'hp': stats.get('hp', 0),
+                        'attack': stats.get('attack', 0),
+                        'defense': stats.get('defense', 0),
+                        'special_attack': stats.get('special-attack', 0),
+                        'special_defense': stats.get('special-defense', 0),
+                        'speed': stats.get('speed', 0),
+                        'description': description_es,
+                        'generation': int(species_data['generation']['url'].split('/')[-2]),
+                        'is_legendary': species_data['is_legendary'],
+                        'is_mythical': species_data['is_mythical'],
+                        'sprite_default': pokemon_data['sprites']['front_default'],
+                        'sprite_shiny': pokemon_data['sprites']['front_shiny'],
+                        'official_artwork_default': artwork_default,
+                        'official_artwork_shiny': artwork_shiny,
+                    }
+                )
 
+                # Tipos
+                PokemonType.objects.filter(pokemon=pokemon).delete()
+                for t in pokemon_data['types']:
+                    type_data = requests.get(t['type']['url'], timeout=10).json()
+                    type_name_es = get_spanish_name(type_data)
+                    type_obj, _ = Type.objects.get_or_create(name=type_name_es)
+                    PokemonType.objects.create(pokemon=pokemon, type=type_obj, slot=t['slot'])
 
-if __name__ == "__main__":
-    for i in range(1, 1026):
-        fetch_pokemon_data(i)
-        print(f"Pokémon {i} importado!")
+                # Habilidades
+                PokemonAbility.objects.filter(pokemon=pokemon).delete()
+                for ability_entry in pokemon_data['abilities']:
+                    ability_data = requests.get(ability_entry['ability']['url'], timeout=10).json()
+                    ability_name_es = get_spanish_name(ability_data)
+                    ability_effect_es = next(
+                        (entry['effect'] for entry in ability_data['effect_entries'] if
+                         entry['language']['name'] == 'es'),
+                        ''
+                    )
+                    ability_obj, _ = Ability.objects.get_or_create(
+                        name=ability_name_es,
+                        defaults={'effect': ability_effect_es}
+                    )
+                    PokemonAbility.objects.update_or_create(
+                        pokemon=pokemon,
+                        ability=ability_obj,
+                        defaults={'is_hidden': ability_entry['is_hidden']}
+                    )
+
+                # Evoluciones
+                evolution_chain_url = species_data['evolution_chain']['url']
+                evolution_data = requests.get(evolution_chain_url, timeout=10).json()
+
+                def process_evolution_chain(chain):
+                    current_name = chain['species']['name']
+                    from_pokemon = Pokemon.objects.filter(name__iexact=current_name).first()
+
+                    for evo in chain.get('evolves_to', []):
+                        target_name = evo['species']['name']
+                        to_pokemon = Pokemon.objects.filter(name__iexact=target_name).first()
+
+                        details = evo['evolution_details'][0] if evo['evolution_details'] else {}
+                        trigger = details.get('trigger', {}).get('name')
+                        level = details.get('min_level')
+                        item = details.get('item', {}).get('name') if details.get('item') else None
+
+                        if from_pokemon and to_pokemon:
+                            Evolution.objects.update_or_create(
+                                from_pokemon=from_pokemon,
+                                to_pokemon=to_pokemon,
+                                defaults={
+                                    'trigger': trigger,
+                                    'level': level,
+                                    'item': item
+                                }
+                            )
+
+                        process_evolution_chain(evo)
+
+                if 'chain' in evolution_data:
+                    process_evolution_chain(evolution_data['chain'])
+
+                self.stdout.write(self.style.SUCCESS(f'Pokémon {pokemon_id} importado'))
+                return True
+
+            except Exception as e:
+                self.stdout.write(self.style.ERROR(f'Error con Pokémon {pokemon_id}: {str(e)}'))
+                return False
+
+        for i in range(1, 1026):
+            fetch_pokemon_data(i)
+            time.sleep(0.25)
