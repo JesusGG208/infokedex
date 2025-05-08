@@ -6,7 +6,7 @@ Jesús G.
 ## Introducción
 Infokédex será una página web diseñada como una Pokédex interactiva, 
 que recopilará información detallada sobre los más de 1000 Pokémon existentes. 
-Incluirá datos como su apariencia, hábitat, estadísticas y evoluciones. 
+Incluirá datos como su apariencia, estadísticas y evoluciones. 
 Contará con un buscador que permitirá filtrar Pokémon por nombre, tipo o 
 posición en su cadena evolutiva. Además, ofrecerá un minijuego similar a Wordle, 
 en el que los usuarios deberán adivinar un Pokémon específico a partir de pistas.
