@@ -31,7 +31,6 @@ class Pokemon(models.Model):
 
 class Type(models.Model):
     name = models.CharField(max_length=20, unique=True, verbose_name="Nombre")
-    icon = models.ImageField(upload_to='types/icons/', verbose_name="Icono")
     named_icon = models.ImageField(upload_to='types/name_types/', verbose_name="Icono con nombre")
 
     def __str__(self):
