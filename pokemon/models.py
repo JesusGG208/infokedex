@@ -31,7 +31,8 @@ class Pokemon(models.Model):
 
 class Type(models.Model):
     name = models.CharField(max_length=20, unique=True, verbose_name="Nombre")
-    image = models.ImageField(upload_to='types/')
+    icon = models.ImageField(upload_to='types/icons/', verbose_name="Icono")
+    named_icon = models.ImageField(upload_to='types/name_types/', verbose_name="Icono con nombre")
 
     def __str__(self):
         return self.name
@@ -86,12 +87,8 @@ class PokemonAbility(models.Model):
 
 
 class Evolution(models.Model):
-    from_pokemon = models.ForeignKey(
-        Pokemon, on_delete=models.CASCADE, related_name='evolves_to', verbose_name="Evoluciona de"
-    )
-    to_pokemon = models.ForeignKey(
-        Pokemon, on_delete=models.CASCADE, related_name='evolves_from', verbose_name="Evoluciona a"
-    )
+    from_pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE, related_name='evolves_to', verbose_name="Evoluciona de")
+    to_pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE, related_name='evolves_from', verbose_name="Evoluciona a")
     trigger = models.CharField(max_length=100, blank=True, null=True, verbose_name="Condición de evolución")
     level = models.PositiveIntegerField(blank=True, null=True, verbose_name="Nivel requerido")
     item = models.CharField(max_length=100, blank=True, null=True, verbose_name="Objeto requerido")
