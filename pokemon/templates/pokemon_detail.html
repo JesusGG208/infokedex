@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>{{ pokemon }}</title>
+    <title>{{ pokemon.name }}</title>
 </head>
 <body>
-
+    <h1>{{ pokemon.name }}</h1>
+    <img src="{{ pokemon.official_artwork_default }}" alt="{{ pokemon.name }}">
+    <p>{{ pokemon.description }}</p>
+    <p>Altura: {{ pokemon.height }} | Peso: {{ pokemon.weight }}</p>
+    <a href="{% url 'pokemon:home_page' %}">Volver</a>
 </body>
 </html>
