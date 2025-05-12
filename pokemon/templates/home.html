@@ -11,25 +11,19 @@
 
     <!-- Buscador -->
     <div style="position: relative;">
-        <input
-            type="text"
-            id="search-input"
-            placeholder="Busca un Pokémon..."
-            onkeyup="search(this.value)"
-            autocomplete="off"
-        />
+        <input type="text" id="search-input" placeholder="Busca un Pokémon..." onkeyup="search(this.value)" autocomplete="off"/>
         <div id="search-results" class="search-results hidden"></div>
     </div>
 
-    <h2>Explorar Pokémon</h2>
+    <h2>Explorar algunos Pokémon</h2>
+    <p>En este apartado, podréis observar algunos de los Pokémon que existen. Haz click en un Pokémon para ver sus detalles.</p>
     <div style="display: flex; flex-wrap: wrap; gap: 20px;">
-        {% for p in pokemones %}
+        {% for p in pokemon %}
             <img src="{{ p.official_artwork_default }}" alt="{{ p.name }}" width="150" />
             <a href="{% url 'pokemon:pokemon_detail' p.id %}"><strong>{{ p.name }}</strong></a>
-            <p>Tipos:</p>
             <ul>
-                {% for type in p.types.all %}
-                    <img src="{{ type.named_icons }}" alt="{{ type.name }}">
+                {% for pt in p.types.all %}
+                    <img src="{{ pt.type.named_icon.url }}" alt="{{ pt.type.name }}" width="90">
                 {% endfor %}
             </ul>
         {% endfor %}
