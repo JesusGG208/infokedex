@@ -1,0 +1,16 @@
+.search-results {
+    border: 1px solid #ccc;
+    position: absolute;
+    background: white;
+    width: 200px;
+    display: none;
+}
+
+.search-results div {
+    padding: 5px;
+    cursor: pointer;
+}
+
+.search-results div:hover {
+    background: #eee;
+}
