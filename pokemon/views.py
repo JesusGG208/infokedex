@@ -12,9 +12,9 @@ class HomePageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        pokemones = list(Pokemon.objects.all())
-        random.shuffle(pokemones)
-        context['pokemones'] = pokemones[:8]
+        pokemon = list(Pokemon.objects.all())
+        random.shuffle(pokemon)
+        context['pokemon'] = pokemon[:8]
         return context
 
 class SearchView(View):
