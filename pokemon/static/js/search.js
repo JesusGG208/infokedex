@@ -1,31 +1,80 @@
-/**
- * Busca Pokémon y muestra el cuadro de resultados si hay coincidencias.
- *
- * @param {string} query - Texto del input de búsqueda.
- */
-async function search(query) {
-    const resultsBox = document.getElementById("search-results");
+// Función para buscar Pokémon
+function search(query) {
+    const searchResults = document.getElementById('search-results');
 
-    // Oculta el cuadro si el input está vacío
-    if (query.length < 1) {
-        resultsBox.style.display = "none";
-        resultsBox.innerHTML = "";
+    if (query.length < 2) {
+        searchResults.classList.remove('active');
         return;
     }
 
-    const response = await fetch(`/search/?q=${query}`);
-    const results = await response.json();
+    fetch(`/api/pokemon/search/?q=${encodeURIComponent(query)}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.length > 0) {
+                let html = '';
+                data.forEach(pokemon => {
+                    html += `
+                        <div class="search-result-item" onclick="window.location.href='/pokemon/${pokemon.id}'">
+                            <img src="${pokemon.sprite}" alt="${pokemon.name}">
+                            <span>${pokemon.name}</span>
+                            <span class="text-muted">#${pokemon.pokedex_id.toString().padStart(3, '0')}</span>
+                        </div>
+                    `;
+                });
+                searchResults.innerHTML = html;
+                searchResults.classList.add('active');
+            } else {
+                searchResults.innerHTML = '<div class="search-result-item">No se encontraron resultados</div>';
+                searchResults.classList.add('active');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            searchResults.classList.remove('active');
+        });
+}
 
-    if (results.length === 0) {
-        resultsBox.style.display = "none";
-        resultsBox.innerHTML = "";
-        return;
+// Cerrar resultados al hacer clic fuera
+document.addEventListener('click', function(event) {
+    const searchResults = document.getElementById('search-results');
+    const searchInput = document.getElementById('search-input');
+
+    if (event.target !== searchInput && !searchInput.contains(event.target)) {
+        searchResults.classList.remove('active');
     }
+});
 
-    // Inserta resultados y muestra el cuadro
-    resultsBox.innerHTML = results
-        .map(p => `<div onclick="location.href='/pokemon_detail/${p.id}/'">${p.name}</div>`)
-        .join('');
+// Manejar navegación con teclado en resultados
+document.getElementById('search-input').addEventListener('keydown', function(e) {
+    const searchResults = document.getElementById('search-results');
+    const items = searchResults.querySelectorAll('.search-result-item');
+    let currentFocus = -1;
 
-    resultsBox.style.display = "block"; // Muestra el cuadro
+    if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        currentFocus++;
+        if (currentFocus >= items.length) currentFocus = 0;
+        setActive(items);
+    } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        currentFocus--;
+        if (currentFocus < 0) currentFocus = items.length - 1;
+        setActive(items);
+    } else if (e.key === 'Enter' && currentFocus > -1) {
+        e.preventDefault();
+        items[currentFocus].click();
+    }
+});
+
+function setActive(items) {
+    if (!items || items.length === 0) return;
+
+    items.forEach(item => {
+        item.classList.remove('active');
+    });
+
+    items[currentFocus].classList.add('active');
+    items[currentFocus].scrollIntoView({
+        block: 'nearest'
+    });
 }
