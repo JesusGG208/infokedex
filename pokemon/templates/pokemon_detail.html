@@ -4,6 +4,21 @@
     <title>{{ pokemon.name }}</title>
 </head>
 <body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">Inicio</a>
+            <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+                ☰
+            </button>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#" class="nav-link">Inicio</a></li>
+                <li><a href="#" class="nav-link">Explorar</a></li>
+                <li><a href="#" class="nav-link">Sobre</a></li>
+                <li><a href="#" class="nav-link">Contacto</a></li>
+            </ul>
+        </div>
+    </nav>
+
     <h1>{{ pokemon.name }}</h1>
     <img src="{{ pokemon.official_artwork_default }}" alt="{{ pokemon.name }}">
     <p>{{ pokemon.description }}</p>
