@@ -1,19 +1,18 @@
 /* Variables de color Pokémon */
 :root {
-    --pokemon-red: #FF1A1A;
     --pokemon-blue: #3B5BA7;
-    --pokemon-yellow: #FFCB05;
     --pokemon-dark-blue: #1D2C5E;
-    --pokemon-light-gray: #F0F0F0;
     --pokemon-green: #3DDC91;
+    --pokemon-light-gray: #F0F0F0;
     --pokemon-purple: #A86ED6;
+    --pokemon-red: #FF1A1A;
+    --pokemon-yellow: #FFCB05;
 }
 
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
 }
-
 
 /* Estilos generales */
 body {
@@ -62,12 +61,68 @@ body {
     position: relative;
 }
 
-/* Search Section - Estilo moderno */
-.search-section {
-    max-width: 600px;
-    margin: 2rem auto;
+/* Navbar */
+.navbar {
+    background: var(--pokemon-dark-blue);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 500;
+    padding: 0.8rem 1.5rem;
 }
 
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: block;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nav-link:hover {
+    color: var(--pokemon-yellow);
+    transform: translateY(-1px);
+}
+
+.nav-logo {
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: white;
+    text-decoration: none;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0;
+    opacity: 1;
+    max-height: none;
+    overflow: visible;
+    width: auto;
+}
+
+.nav-toggle {
+    display: none;
+    font-size: 1.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: white;
+}
+
+/* Search Section - Estilo moderno */
 .search-box {
     position: relative;
     background: white;
@@ -76,20 +131,35 @@ body {
     overflow: visible;
 }
 
-
-#search-input {
-    width: 100%;
-    padding: 1rem 1.5rem;
-    font-size: 1rem;
-    border: none;
-    outline: none;
-    background: transparent;
+.search-item {
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid #f0f0f0;
+    text-decoration: none;
     color: #333;
-    border-radius: 15px 15px 0 0;
+    background: white;
+    transition: all 0.2s ease;
 }
 
-#search-input::placeholder {
-    color: #aaa;
+.search-item:hover {
+    background-color: #f8f8f8;
+}
+
+.search-item img {
+    width: 40px;
+    height: 40px;
+}
+
+.search-item .pokemon-name {
+    font-weight: 600;
+    flex-grow: 1;
+}
+
+.search-item .pokemon-number {
+    color: #777;
+    font-size: 0.9rem;
 }
 
 .search-results {
@@ -109,41 +179,29 @@ body {
     animation: fadeIn 0.25s ease;
 }
 
-
 .search-results.active {
     display: block;
     animation: fadeIn 0.3s ease;
 }
 
-.search-item {
-    padding: 10px 15px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    border-bottom: 1px solid #f0f0f0;
-    text-decoration: none;
+.search-section {
+    max-width: 600px;
+    margin: 2rem auto;
+}
+
+#search-input {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    border: none;
+    outline: none;
+    background: transparent;
     color: #333;
-    background: white;
-    transition: all 0.2s ease;
+    border-radius: 15px 15px 0 0;
 }
 
-.search-item:hover {
-    background-color: #f8f8f8
-}
-
-.search-item img {
-    width: 40px;
-    height: 40px;
-}
-
-.search-item .pokemon-name {
-    font-weight: 600;
-    flex-grow: 1;
-}
-
-.search-item .pokemon-number {
-    color: #777;
-    font-size: 0.9rem;
+#search-input::placeholder {
+    color: #aaa;
 }
 
 /* Explore Section - Tarjetas modernas */
@@ -179,13 +237,6 @@ body {
     margin: 0 auto 2rem;
 }
 
-.pokemon-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-}
-
 .pokemon-card {
     background: white;
     border-radius: 10px;
@@ -215,6 +266,13 @@ body {
     box-shadow: 0 12px 25px rgba(0,0,0,0.15);
 }
 
+.pokemon-card h3 {
+    margin: 1rem 0 0.5rem;
+    font-size: 1.2rem;
+    color: var(--pokemon-dark-blue);
+    font-weight: 600;
+}
+
 .pokemon-card img {
     width: 120px;
     height: 120px;
@@ -222,11 +280,11 @@ body {
     transition: transform 0.3s ease;
 }
 
-.pokemon-card h3 {
-    margin: 1rem 0 0.5rem;
-    font-size: 1.2rem;
-    color: var(--pokemon-dark-blue);
-    font-weight: 600;
+.pokemon-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
 }
 
 .types {
@@ -241,71 +299,7 @@ body {
     transition: transform 0.2s ease;
 }
 
-/* Navbar */
-.navbar {
-    background: var(--pokemon-dark-blue);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    position: sticky;
-    top: 0;
-    z-index: 500;
-    padding: 0.8rem 1.5rem;
-}
-
-.nav-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-}
-
-.nav-logo {
-    font-weight: 700;
-    font-size: 1.25rem;
-    color: white;
-    text-decoration: none;
-}
-
-.nav-toggle {
-    display: none;
-    font-size: 1.5rem;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: white;
-}
-
-.nav-menu {
-    display: flex;
-    list-style: none;
-    gap: 1.5rem;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.5s ease-in-out, opacity 0.3s ease;
-    opacity: 0;
-    flex-direction: column;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-}
-
-.nav-link {
-    text-decoration: none;
-    color: white;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    padding: 0.5rem 0;
-    display: block;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-
-    .nav-link:hover {
-        color: var(--pokemon-yellow);
-        transform: translateX(5px);
-    }
-
+/* Responsive */
 @media (max-width: 768px) {
     @keyframes slideDown {
         from {
@@ -316,10 +310,6 @@ body {
             transform: translateY(0);
             opacity: 1;
         }
-    }
-
-    .pokemon-grid {
-        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
     }
 
     .header h1 {
@@ -334,16 +324,20 @@ body {
         gap: 1rem;
     }
 
-    .nav-toggle {
-        display: block;
-    }
-
     .nav-menu.active {
         display: flex;
         max-height: 500px;
         opacity: 1;
         padding: 1rem 0;
         animation: slideDown 0.4s ease;
+    }
+
+    .nav-toggle {
+        display: block;
+    }
+
+    .nav-link {
+        padding: 0.5rem 0;
     }
 
     .pokemon-grid {

@@ -34,14 +34,14 @@
     <main>
         <section class="search-section">
             <div class="search-box">
-                <input type="text" id="search-input" placeholder="Busca un Pokémon por nombre o número..." autocomplete="off">
+                <input type="text" id="search-input" placeholder="Busca un Pokémon por nombre o número..." >
                 <div id="search-results" class="search-results"></div>
             </div>
         </section>
 
         <section class="explore-section">
             <h2>Explorar algunos Pokémon</h2>
-            <p>Haz clic en un Pokémon para ver sus detalles.</p>
+            <p>Estos son algunos de los pokémon que existen. Haz clic en uno de ellos para ver sus detalles.</p>
             <div class="pokemon-grid">
                 {% for p in pokemon %}
                 <a href="{% url 'pokemon:pokemon_detail' p.id %}" class="pokemon-card">
