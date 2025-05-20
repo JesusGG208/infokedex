@@ -1,20 +1,65 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block title %}Listado Pokémon{% endblock %}
+
 {% block content %}
-<h1>Lista de Pokémon</h1>
 
-<div>
-  <input type="text" id="search-input" placeholder="Buscar por nombre o número...">
-</div>
+    <link rel="stylesheet" href="{% static 'pokemon_list.css' %}">
 
-<ul id="pokemon-list">
-  {% for p in pokemon %}
-    <li>
-      <img src="{{ p.sprite_default }}" alt="{{ p.name }}">
-      <strong>{{ p.pokedex_id }} - {{ p.name }}</strong>
-    </li>
-  {% endfor %}
-</ul>
+    <h1>Listado de Pokémon</h1>
 
-<script src="{% static 'js/pokemon_list.js' %}"></script>
+    <!-- Buscador -->
+    <input type="text" id="search_input" placeholder="Buscar por nombre o número...">
+
+    <!-- Filtros -->
+    <div class="filters">
+        <select id="filter_type">
+            <option value="">Todos los tipos</option>
+            <option value="Fuego">Fuego</option>
+            <option value="Agua">Agua</option>
+            <option value="Planta">Planta</option>
+            <option value="Eléctrico">Eléctrico</option>
+            <option value="Hielo">Hielo</option>
+            <option value="Lucha">Lucha</option>
+            <option value="Veneno">Veneno</option>
+            <option value="Tierra">Tierra</option>
+            <option value="Volador">Volador</option>
+            <option value="Psíquico">Psíquico</option>
+            <option value="Bicho">Bicho</option>
+            <option value="Roca">Roca</option>
+            <option value="Fantasma">Fantasma</option>
+            <option value="Dragón">Dragón</option>
+            <option value="Siniestro">Siniestro</option>
+            <option value="Acero">Acero</option>
+            <option value="Hada">Hada</option>
+            <option value="Normal">Normal</option>
+        </select>
+
+        <select id="filter_generation">
+            <option value="">Todas las generaciones</option>
+            <option value="1">Gen I</option>
+            <option value="2">Gen II</option>
+            <option value="3">Gen III</option>
+            <option value="4">Gen IV</option>
+            <option value="5">Gen V</option>
+            <option value="6">Gen VI</option>
+            <option value="7">Gen VII</option>
+            <option value="8">Gen VIII</option>
+            <option value="9">Gen IX</option>
+        </select>
+
+        <select id="filter_evolution_stage">
+            <option value="">Todas las fases</option>
+            <option value="1">Primera fase</option>
+            <option value="2">Fase intermedia</option>
+            <option value="3">Fase final</option>
+        </select>
+    </div>
+
+    <!-- Lista de Pokémon -->
+    <div id="pokemon_list" class="pokemon-list">
+        <!-- Se llenará dinámicamente -->
+    </div>
+
+    <script src="{% static 'js/pokemon_list.js' %}"></script>
 {% endblock %}

@@ -7,5 +7,6 @@ urlpatterns = [
     path('', views.HomePageView.as_view() , name='home_page'),
     path('search/', views.SearchView.as_view(), name='search'),
     path('pokemon_list/', views.PokemonListView.as_view(), name='pokemon_list'),
+    path('filter/', views.PokemonFilterView.as_view(), name='filter'),
     path('pokemon_detail/<int:pk>/', views.PokemonDetailView.as_view(), name='pokemon_detail')
 ]

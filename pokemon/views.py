@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.views import View
 from django.views.generic import DetailView, ListView, TemplateView
 from django.db.models import Q
-from pokemon.models import Pokemon
+from pokemon.models import Pokemon, Type
 
 
 class HomePageView(TemplateView):
@@ -29,6 +29,71 @@ class PokemonListView(ListView):
     model = Pokemon
     template_name = 'all_templates/pokemon_list.html'
     context_object_name = 'pokemon'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['pokemon'] = Pokemon.objects.all()
+        context['types'] = Type.objects.all()
+        context['generations'] = list(Pokemon.objects.values_list('generation', flat=True).distinct().order_by('generation'))
+        return context
+
+class PokemonFilterView(View):
+    def get(self, request):
+        q = request.GET.get('q')
+        type_ = request.GET.get('type')
+        generation = request.GET.get('generation')
+        evo_stage = request.GET.get('evolution_stage')
+
+        pokemon = Pokemon.objects.all()
+
+        # Buscador
+        if q:
+            pokemon = pokemon.filter(
+                Q(name__icontains=q) | Q(pokedex_id__icontains=q)
+            )
+
+        # Tipo
+        if type_:
+            pokemon = pokemon.filter(types__type__name=type_)
+
+        # Generación
+        if generation:
+            try:
+                generation = int(generation)
+                pokemon = pokemon.filter(generation=generation)
+            except ValueError:
+                pass
+
+        # Etapa evolutiva
+        if evo_stage:
+            try:
+                evo_stage = int(evo_stage)
+                if evo_stage == 1:
+                    pokemon = pokemon.filter(evolves_from__isnull=True)
+                elif evo_stage == 2:
+                    pokemon = pokemon.filter(
+                        evolves_from__isnull=False,
+                        evolves_to__isnull=False
+                    )
+                elif evo_stage == 3:
+                    pokemon = pokemon.filter(
+                        Q(evolves_to__isnull=True) & (
+                            Q(evolves_from__isnull=False) |
+                            Q(evolves_from__isnull=True)  # los que no evolucionan, fase final
+                        )
+                    )
+            except ValueError:
+                pass
+
+        pokemon = pokemon.distinct()[:100]
+
+        data = [{
+            'name': p.name,
+            'pokedex_id': p.pokedex_id,
+            'sprite': p.sprite_default
+        } for p in pokemon]
+
+        return JsonResponse(data, safe=False)
 
 class PokemonDetailView(DetailView):
     model = Pokemon
