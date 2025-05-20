@@ -7,7 +7,7 @@ from pokemon.models import Pokemon
 
 
 class HomePageView(TemplateView):
-    template_name = 'home.html'
+    template_name = 'all_templates/home.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -27,12 +27,12 @@ class SearchView(View):
 
 class PokemonListView(ListView):
     model = Pokemon
-    template_name = 'pokemon_list.html'
+    template_name = 'all_templates/pokemon_list.html'
     context_object_name = 'pokemon'
 
 class PokemonDetailView(DetailView):
     model = Pokemon
-    template_name = 'pokemon_detail.html'
+    template_name = 'all_templates/pokemon_detail.html'
 
 
 

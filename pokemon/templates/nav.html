@@ -1,13 +1,7 @@
 {% load static %}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <title>{{ pokemon.name }}</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
-    <link rel="stylesheet" href="{% static 'pokemon_detail.css' %}">
-</head>
-<body>
-    <nav class="navbar">
+<link rel="stylesheet" href="{% static 'nav.css' %}">
+
+<nav class="navbar">
         <div class="nav-container">
             <a href="#" class="nav-logo">
                 <img src="{% static 'images/logo.png' %}" alt="logo" width="100">
@@ -22,12 +16,6 @@
                 <li><a href="#" class="nav-link">Contacto</a></li>
             </ul>
         </div>
-    </nav>
+</nav>
 
-    <h1>{{ pokemon.name }}</h1>
-    <img src="{{ pokemon.official_artwork_default }}" alt="{{ pokemon.name }}">
-    <p>{{ pokemon.description }}</p>
-    <p>Altura: {{ pokemon.height }} | Peso: {{ pokemon.weight }}</p>
-    <a href="{% url 'pokemon:home_page' %}">Volver</a>
-</body>
-</html>
+<script src="{% static 'js/nav.js' %}"></script>
