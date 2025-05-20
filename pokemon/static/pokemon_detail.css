@@ -1,26 +1,6 @@
-/* Variables de color Pokémon */
-:root {
-    --pokemon-blue: #3B5BA7;
-    --pokemon-dark-blue: #1D2C5E;
-    --pokemon-green: #3DDC91;
-    --pokemon-light-gray: #F0F0F0;
-    --pokemon-purple: #A86ED6;
-    --pokemon-red: #FF1A1A;
-    --pokemon-yellow: #FFCB05;
-}
-
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
-}
-
-/* Estilos generales */
-body {
-    margin: 0;
-    font-family: 'Roboto', 'Arial', sans-serif;
-    background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
-    color: #333;
-    min-height: 100vh;
 }
 
 /* Header estilo Pokédex */
