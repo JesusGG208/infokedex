@@ -30,13 +30,6 @@ class PokemonListView(ListView):
     template_name = 'all_templates/pokemon_list.html'
     context_object_name = 'pokemon'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['pokemon'] = Pokemon.objects.all()
-        context['types'] = Type.objects.all()
-        context['generations'] = list(Pokemon.objects.values_list('generation', flat=True).distinct().order_by('generation'))
-        return context
-
 class PokemonFilterView(View):
     def get(self, request):
         q = request.GET.get('q')
@@ -69,7 +62,10 @@ class PokemonFilterView(View):
             try:
                 evo_stage = int(evo_stage)
                 if evo_stage == 1:
-                    pokemon = pokemon.filter(evolves_from__isnull=True)
+                    pokemon = pokemon.filter(
+                        evolves_from__isnull=True,
+                        evolves_to__isnull=False
+                    )
                 elif evo_stage == 2:
                     pokemon = pokemon.filter(
                         evolves_from__isnull=False,
@@ -77,15 +73,19 @@ class PokemonFilterView(View):
                     )
                 elif evo_stage == 3:
                     pokemon = pokemon.filter(
-                        Q(evolves_to__isnull=True) & (
-                            Q(evolves_from__isnull=False) |
-                            Q(evolves_from__isnull=True)  # los que no evolucionan, fase final
-                        )
+                        evolves_from__isnull=False,
+                        evolves_to__isnull=True
                     )
+                elif evo_stage == 4:
+                    pokemon = pokemon.filter(
+                        evolves_from__isnull=True,
+                        evolves_to__isnull=True
+                    )
+
             except ValueError:
                 pass
 
-        pokemon = pokemon.distinct()[:100]
+        pokemon = pokemon.distinct()[:1025]
 
         data = [{
             'name': p.name,
