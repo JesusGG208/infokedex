@@ -8,58 +8,42 @@
 
     <h1>Listado de Pokémon</h1>
 
-    <!-- Buscador -->
-    <input type="text" id="search_input" placeholder="Buscar por nombre o número...">
-
-    <!-- Filtros -->
     <div class="filters">
+        <input type="text" id="search_input" placeholder="Buscar por nombre o ID..." value="{{ request.GET.q }}">
+
         <select id="filter_type">
-            <option value="">Todos los tipos</option>
-            <option value="Fuego">Fuego</option>
-            <option value="Agua">Agua</option>
-            <option value="Planta">Planta</option>
-            <option value="Eléctrico">Eléctrico</option>
-            <option value="Hielo">Hielo</option>
-            <option value="Lucha">Lucha</option>
-            <option value="Veneno">Veneno</option>
-            <option value="Tierra">Tierra</option>
-            <option value="Volador">Volador</option>
-            <option value="Psíquico">Psíquico</option>
-            <option value="Bicho">Bicho</option>
-            <option value="Roca">Roca</option>
-            <option value="Fantasma">Fantasma</option>
-            <option value="Dragón">Dragón</option>
-            <option value="Siniestro">Siniestro</option>
-            <option value="Acero">Acero</option>
-            <option value="Hada">Hada</option>
-            <option value="Normal">Normal</option>
+            <option value="">Tipo</option>
+            {% for type in types %}
+                <option value="{{ type.name }}" {% if request.GET.type == type.name %}selected{% endif %}>{{ type.name }}</option>
+            {% endfor %}
         </select>
 
         <select id="filter_generation">
-            <option value="">Todas las generaciones</option>
-            <option value="1">Gen I</option>
-            <option value="2">Gen II</option>
-            <option value="3">Gen III</option>
-            <option value="4">Gen IV</option>
-            <option value="5">Gen V</option>
-            <option value="6">Gen VI</option>
-            <option value="7">Gen VII</option>
-            <option value="8">Gen VIII</option>
-            <option value="9">Gen IX</option>
+            <option value="">Generación</option>
+            {% for gen in generations %}
+                <option value="{{ gen }}">Gen {{ gen }}</option>
+            {% endfor %}
         </select>
 
         <select id="filter_evolution_stage">
-            <option value="">Todas las fases</option>
-            <option value="1">Primera fase</option>
-            <option value="2">Fase intermedia</option>
-            <option value="3">Fase final</option>
-            <option value="4">No tiene cadena evolutiva</option>
+            <option value="">Etapa de evolución</option>
+            <option value="1" {% if request.GET.evolution_stage == '1' %}selected{% endif %}>Básico</option>
+            <option value="2" {% if request.GET.evolution_stage == '2' %}selected{% endif %}>Intermedio</option>
+            <option value="3" {% if request.GET.evolution_stage == '3' %}selected{% endif %}>Final</option>
+            <option value="4" {% if request.GET.evolution_stage == '4' %}selected{% endif %}>Sin evolución</option>
         </select>
     </div>
 
-    <!-- Lista de Pokémon -->
     <div id="pokemon_list" class="pokemon-list">
-        <!-- Se llenará dinámicamente -->
+        {% for pokemon in pokemons %}
+            <div class="pokemon-card">
+                <img src="{{ pokemon.sprite_default }}" alt="{{ pokemon.name }}">
+                <h3>{{ pokemon.name }}</h3>
+                <p>#{{ pokemon.pokedex_id }}</p>
+            </div>
+        {% empty %}
+            <p>No se encontraron Pokémon con esos filtros.</p>
+        {% endfor %}
     </div>
 
     <script src="{% static 'js/pokemon_list.js' %}"></script>

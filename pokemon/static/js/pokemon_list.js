@@ -1,55 +1,43 @@
-// Cargar lista inicial
-actualizarListaPokemon();
+document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById("search_input");
+    const typeFilter = document.getElementById("filter_type");
+    const genFilter = document.getElementById("filter_generation");
+    const evoFilter = document.getElementById("filter_evolution_stage");
+    const pokemonList = document.getElementById("pokemon_list");
 
-// Eventos de entrada y cambio
-document.getElementById('search_input').addEventListener('input', actualizarListaPokemon);
-document.getElementById('filter_type').addEventListener('change', actualizarListaPokemon);
-document.getElementById('filter_generation').addEventListener('change', actualizarListaPokemon);
-document.getElementById('filter_evolution_stage').addEventListener('change', actualizarListaPokemon);
+    function fetchFilteredResults() {
+        const q = searchInput.value;
+        const type = typeFilter.value;
+        const generation = genFilter.value;
+        const evolution = evoFilter.value;
 
-function actualizarListaPokemon() {
-    const q = document.getElementById('search_input').value;
-    const type = document.getElementById('filter_type').value;
-    const generation = document.getElementById('filter_generation').value;
-    const evoStage = document.getElementById('filter_evolution_stage').value;
-
-    const params = new URLSearchParams();
-    if (q) {
-        params.append('q', q);
-    }
-
-    if (type) {
-        params.append('type', type);
-    }
-
-    if (generation) {
-        params.append('generation', generation);
-    }
-
-    if (evoStage) {
-        params.append('evolution_stage', evoStage);
-    }
-
-    fetch(`/filter/?${params.toString()}`)
-        .then(response => response.json())
-        .then(data => {
-            const lista = document.getElementById('pokemon_list');
-            lista.innerHTML = '';
-
-            if (data.length === 0) {
-                lista.innerHTML = '<p>No se encontraron Pokémon.</p>';
-                return;
-            }
-
-            data.forEach(p => {
-                const card = document.createElement('div');
-                card.className = 'pokemon-card';
-                card.innerHTML = `
-                    <img src="${p.sprite}" alt="${p.name}">
-                    <p>#${p.pokedex_id} - ${p.name}</p>
-                `;
-                lista.appendChild(card);
-            });
+        const params = new URLSearchParams({
+            q,
+            type,
+            generation,
+            evolution_stage: evolution,
         });
-}
 
+        fetch(`?${params.toString()}`, {
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+            }
+        })
+        .then(response => response.text())
+        .then(html => {
+            // Extraer solo el contenido de #pokemon_list del HTML devuelto
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, "text/html");
+            const newList = doc.getElementById("pokemon_list");
+            if (newList) {
+                pokemonList.innerHTML = newList.innerHTML;
+            }
+        });
+    }
+
+    // Escucha eventos
+    [searchInput, typeFilter, genFilter, evoFilter].forEach(element => {
+        element.addEventListener("input", fetchFilteredResults);
+        element.addEventListener("change", fetchFilteredResults);
+    });
+})

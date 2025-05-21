@@ -1,191 +1,76 @@
-/* Contenedor principal */
-.content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem 1.5rem;
+/* Animación suave */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-/* Título principal */
-h1 {
-    color: var(--pokemon-dark-blue);
-    font-size: 2.5rem;
-    text-align: center;
-    margin-bottom: 2rem;
-    position: relative;
-    padding-bottom: 1rem;
+/* Buscador y filtros contenedor */
+.filters,
+#search_input {
+    animation: fadeIn 0.5s ease;
 }
 
-h1::after {
-    content: "";
-    display: block;
-    width: 100px;
-    height: 4px;
-    background: var(--pokemon-yellow);
-    margin: 15px auto 0;
-    border-radius: 2px;
-}
-
-/* Buscador */
+/* Input de búsqueda */
 #search_input {
     width: 100%;
     max-width: 600px;
-    margin: 0 auto 2rem;
     display: block;
+    margin: 2rem auto 1.5rem;
+    padding: 1rem 1.5rem;
+    padding-left: 2.5rem;
     font-size: 1rem;
     border: none;
-    border-radius: 30px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
     outline: none;
-    transition: all 0.3s ease;
+    border-radius: 15px;
     background: white url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23aaa" viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>') no-repeat 15px center;
-    padding: 1rem 1.5rem 1rem 45px;
+    background-size: 16px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+    color: #333;
 }
 
 #search_input:focus {
-    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
-    transform: translateY(-2px);
+    box-shadow: 0 0 0 3px var(--pokemon-yellow);
 }
 
 #search_input::placeholder {
     color: #aaa;
 }
 
-/* Filtros */
+/* Filtros estilo moderno */
 .filters {
     display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-bottom: 2rem;
     flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin: 0 auto 2rem;
+    max-width: 800px;
 }
 
 .filters select {
-    padding: 0.8rem 1.2rem;
-    border: none;
-    border-radius: 30px;
-    background-color: white;
-    color: var(--pokemon-dark-blue);
-    font-weight: 500;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    position: relative;
+    /* Espacio para la flecha */
+    padding: 0.8rem 3rem 0.8rem 1.2rem;
+    font-size: 1rem;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    color: #333;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
     cursor: pointer;
-    transition: all 0.3s ease;
     appearance: none;
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="%231D2C5E" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>');
-    background-repeat: no-repeat;
-    background-position: right 1rem center;
-    background-size: 12px;
-    padding-right: 2.5rem;
-    min-width: 180px;
-}
-
-.filters select:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    background: #fff url("data:image/svg+xml;utf8,<svg fill='%23999' height='16' viewBox='0 0 24 24' width='16' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>") right 1rem center no-repeat;
+    background-size: 16px;
 }
 
 .filters select:focus {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(255, 203, 5, 0.4);
-}
-
-/* Lista de Pokémon */
-.pokemon-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-}
-
-.pokemon-item {
-    background: white;
-    border-radius: 12px;
-    padding: 1.5rem 1rem;
-    text-align: center;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-    transition: all 0.3s ease;
-    text-decoration: none;
-    color: inherit;
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    position: relative;
-    overflow: hidden;
-    animation: fadeIn 0.5s ease;
-}
-
-.pokemon-item::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 5px;
-    background: linear-gradient(90deg, var(--pokemon-red) 0%, var(--pokemon-blue) 100%);
-}
-
-.pokemon-item:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
-}
-
-.pokemon-item img {
-    width: 120px;
-    height: 120px;
-    object-fit: contain;
-    transition: transform 0.3s ease;
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
-}
-
-.pokemon-item:hover img {
-    transform: scale(1.1);
-}
-
-.pokemon-item h3 {
-    margin: 1rem 0 0.5rem;
-    font-size: 1.2rem;
-    color: var(--pokemon-dark-blue);
-    font-weight: 600;
-    text-transform: capitalize;
-}
-
-.pokemon-id {
-    display: inline-block;
-    background-color: var(--pokemon-yellow);
-    color: var(--pokemon-dark-blue);
-    font-weight: bold;
-    padding: 0.2rem 0.8rem;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    margin-bottom: 0.5rem;
-}
-
-.pokemon-types {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-top: 0.8rem;
-}
-
-.pokemon-type {
-    font-size: 0.75rem;
-    padding: 0.3rem 0.8rem;
-    border-radius: 20px;
-    color: white;
-    font-weight: 500;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-}
-
-/* Animaciones */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    border-color: var(--pokemon-blue);
+    box-shadow: 0 0 0 2px var(--pokemon-yellow);
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-    .pokemon-list {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-        gap: 1.5rem;
-    }
-
     .filters {
         flex-direction: column;
         align-items: center;
@@ -193,26 +78,6 @@ h1::after {
 
     .filters select {
         width: 100%;
-        max-width: 250px;
-    }
-}
-
-@media (max-width: 480px) {
-    h1 {
-        font-size: 2rem;
-    }
-
-    .pokemon-list {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
-    }
-
-    .pokemon-item {
-        padding: 1rem 0.5rem;
-    }
-
-    .pokemon-item img {
-        width: 80px;
-        height: 80px;
+        max-width: 400px;
     }
 }
