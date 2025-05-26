@@ -28,7 +28,7 @@ class SearchView(View):
 class PokemonListView(ListView):
     model = Pokemon
     template_name = 'all_templates/pokemon_list.html'
-    context_object_name = 'pokemons'
+    context_object_name = 'pokemon'
 
     def get_queryset(self):
         queryset = Pokemon.objects.all()
