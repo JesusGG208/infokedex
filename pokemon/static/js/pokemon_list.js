@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const searchInput = document.getElementById("search_input");
-    const typeFilter = document.getElementById("filter_type");
-    const genFilter = document.getElementById("filter_generation");
-    const evoFilter = document.getElementById("filter_evolution_stage");
-    const pokemonList = document.getElementById("pokemon_list");
+    const searchInput = document.getElementById("search-input");
+    const typeFilter = document.getElementById("filter-type");
+    const genFilter = document.getElementById("filter-generation");
+    const evoFilter = document.getElementById("filter-evolution-stage");
+    const pokemonList = document.getElementById("pokemon-list");
 
     function fetchFilteredResults() {
         const q = searchInput.value;
@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // Extraer solo el contenido de #pokemon_list del HTML devuelto
             const parser = new DOMParser();
             const doc = parser.parseFromString(html, "text/html");
-            const newList = doc.getElementById("pokemon_list");
+            const newList = doc.getElementById("pokemon-list");
             if (newList) {
                 pokemonList.innerHTML = newList.innerHTML;
             }

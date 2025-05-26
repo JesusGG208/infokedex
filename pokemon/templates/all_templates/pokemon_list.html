@@ -7,44 +7,96 @@
     <link rel="stylesheet" href="{% static 'pokemon_list.css' %}">
 
     <h1>Listado de Pokémon</h1>
+    <p>
+        Aquí podrás ver el listado completo con todos los Pokémon. <strong> Si quieres saber más sobre alguno, haz clic en su nombre.</strong>
+    </p>
 
     <div class="filters">
-        <input type="text" id="search_input" placeholder="Buscar por nombre o ID..." value="{{ request.GET.q }}">
+        <input type="text" id="search-input" placeholder="Buscar por nombre o ID..." value="{{ request.GET.q }}">
 
-        <select id="filter_type">
-            <option value="">Tipo</option>
-            {% for type in types %}
-                <option value="{{ type.name }}" {% if request.GET.type == type.name %}selected{% endif %}>{{ type.name }}</option>
-            {% endfor %}
-        </select>
+        <div class="filters-type">
+            <label for="filter-type">Filtrar por tipo</label>
+            <select id="filter-type">
+                <option value="">Tipo</option>
+                {% for type in types %}
+                    <option value="{{ type.name }}" {% if request.GET.type == type.name %}selected{% endif %}>{{ type.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
 
-        <select id="filter_generation">
-            <option value="">Generación</option>
-            {% for gen in generations %}
-                <option value="{{ gen }}">Gen {{ gen }}</option>
-            {% endfor %}
-        </select>
+        <div class="filters-generation">
+            <label for="filter-generation">Filtrar por generación</label>
+            <select id="filter-generation">
+                <option value="">Generación</option>
+                {% for gen in generations %}
+                    <option value="{{ gen }}">Gen {{ gen }}</option>
+                {% endfor %}
+            </select>
+        </div>
 
-        <select id="filter_evolution_stage">
-            <option value="">Etapa de evolución</option>
-            <option value="1" {% if request.GET.evolution_stage == '1' %}selected{% endif %}>Básico</option>
-            <option value="2" {% if request.GET.evolution_stage == '2' %}selected{% endif %}>Intermedio</option>
-            <option value="3" {% if request.GET.evolution_stage == '3' %}selected{% endif %}>Final</option>
-            <option value="4" {% if request.GET.evolution_stage == '4' %}selected{% endif %}>Sin evolución</option>
-        </select>
+        <div class="filters-ev-stage">
+            <label for="filter-evolution-stage">Filtrar por etapa evolutiva</label>
+            <select id="filter-evolution-stage">
+                <option value="">Etapa de evolución</option>
+                <option value="1" {% if request.GET.evolution_stage == '1' %}selected{% endif %}>Básico</option>
+                <option value="2" {% if request.GET.evolution_stage == '2' %}selected{% endif %}>Intermedio</option>
+                <option value="3" {% if request.GET.evolution_stage == '3' %}selected{% endif %}>Final</option>
+                <option value="4" {% if request.GET.evolution_stage == '4' %}selected{% endif %}>Sin cadena evolutiva</option>
+            </select>
+        </div>
     </div>
 
-    <div id="pokemon_list" class="pokemon-list">
-        {% for pokemon in pokemons %}
-            <div class="pokemon-card">
-                <img src="{{ pokemon.sprite_default }}" alt="{{ pokemon.name }}">
-                <h3>{{ pokemon.name }}</h3>
-                <p>#{{ pokemon.pokedex_id }}</p>
-            </div>
-        {% empty %}
-            <p>No se encontraron Pokémon con esos filtros.</p>
-        {% endfor %}
+    <div id="pokemon-list" class="pokemon-list">
+        <table>
+            <thead>
+                <tr>
+                    <th>Sprite</th>
+                    <th>Nombre</th>
+                    <th>Tipos</th>
+                    <th>Generación</th>
+                    <th>Fase evolutiva</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in pokemon %}
+                    <tr>
+                        <td>
+                            <img src="{{ p.sprite_default }}" alt="{{ p.name }}" width="64">
+                        </td>
+                        <td>
+                            <a href="{% url 'pokemon:pokemon_detail' p.id %}">
+                                {{ p.name }}
+                            </a>
+                        </td>
+                        <td>
+                            {% for t in p.types.all %}
+                                <img src="{{ t.type.named_icon.url }}" alt="{{ t.type.name }}" title="{{ t.type.name }}" class="type-icon" width="90">
+                            {% endfor %}
+                        </td>
+                        <td>
+                            Generación {{ p.generation }}
+                        </td>
+                        <td>
+                            {% if not p.evolves_from.all and p.evolves_to.all %}
+                                Básico
+                            {% elif p.evolves_from.all and p.evolves_to.all %}
+                                Intermedio
+                            {% elif p.evolves_from.all and not p.evolves_to.all %}
+                                Final
+                            {% else %}
+                                Sin cadena evolutiva
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5">No se encontraron Pokémon con esos filtros.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 
     <script src="{% static 'js/pokemon_list.js' %}"></script>
 {% endblock %}
+
