@@ -50,6 +50,7 @@
         <table>
             <thead>
                 <tr>
+                    <th>Pokédex ID</th>
                     <th>Sprite</th>
                     <th>Nombre</th>
                     <th>Tipos</th>
@@ -59,14 +60,15 @@
             </thead>
             <tbody>
                 {% for p in pokemon %}
-                    <tr>
+                    <tr onclick="window.location.href='{% url 'pokemon:pokemon_detail' p.id %}'" style="cursor: pointer;">
+                        <td>
+                            {{ p.pokedex_id }}
+                        </td>
                         <td>
                             <img src="{{ p.sprite_default }}" alt="{{ p.name }}" width="64">
                         </td>
                         <td>
-                            <a href="{% url 'pokemon:pokemon_detail' p.id %}">
-                                {{ p.name }}
-                            </a>
+                            {{ p.name }}
                         </td>
                         <td>
                             {% for t in p.types.all %}

@@ -51,11 +51,11 @@ class PokemonListView(ListView):
         evo_stage = self.request.GET.get('evolution_stage')
         if evo_stage:
             if evo_stage == '1':
-                queryset = queryset.filter(evolves_from__isnull=True)
+                queryset = queryset.filter(evolves_from__isnull=True, evolves_to__isnull=False)
             elif evo_stage == '2':
                 queryset = queryset.filter(evolves_from__isnull=False, evolves_to__isnull=False)
             elif evo_stage == '3':
-                queryset = queryset.filter(evolves_to__isnull=True)
+                queryset = queryset.filter(evolves_from__isnull=False, evolves_to__isnull=True)
             elif evo_stage == '4':
                 # Sin evolución
                 queryset = queryset.filter(evolves_from__isnull=True, evolves_to__isnull=True)

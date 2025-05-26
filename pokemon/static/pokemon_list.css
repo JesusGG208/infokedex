@@ -152,6 +152,7 @@ a {
 /* Tipo de Pokémon */
 .type-icon {
     margin-right: 4px;
+    padding: 2px;
     transition: transform 0.2s ease;
 }
 
@@ -167,46 +168,70 @@ a {
     padding: 2rem 1rem;
 }
 
-
 /* Responsive */
 @media (max-width: 768px) {
-    .filters {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .filters select {
-        width: 100%;
-        max-width: 400px;
-    }
-
-    .pokemon-list table {
-        font-size: 0.9rem;
-    }
-
     .pokemon-list thead {
         display: none;
     }
 
-    .pokemon-list tbody td {
-        display: block;
-        padding: 0.75rem 1rem;
-    }
-
     .pokemon-list tbody tr {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        gap: 1rem;
         margin-bottom: 1rem;
-        display: block;
-        border: 1px solid #eee;
-        border-radius: 10px;
+        border: 1px solid #ddd;
+        border-radius: 12px;
         background: #fff;
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+        padding: 1rem;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .pokemon-list tbody td:before {
-        content: attr(data-label);
-        font-weight: 600;
+    .pokemon-list tbody tr:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Sprite a la izquierda */
+    .pokemon-list tbody td:first-child {
+        flex: 0 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .pokemon-list tbody td:first-child img {
+        width: 72px;
+        height: 72px;
+        object-fit: contain;
+    }
+
+    /* Info a la derecha */
+    .pokemon-list tbody td:not(:first-child) {
         display: block;
-        margin-bottom: 0.3rem;
+        flex: 1;
+        padding: 0.3rem 0;
+    }
+
+    .pokemon-list tbody td:not(:first-child):before {
+        content: attr(data-label);
+        display: block;
+        font-weight: 600;
         color: #555;
+        margin-bottom: 0.2rem;
+    }
+
+    /* Centrar toda la info dentro del bloque derecho */
+    .pokemon-list tbody td:not(:first-child) {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    /* Asegurar búsqueda se adapta */
+    #search-input {
+        width: 70%;
     }
 }
+
