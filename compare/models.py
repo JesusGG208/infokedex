@@ -10,7 +10,39 @@ class Comparison(models.Model):
     def is_draw(self):
         return self.winner is None
 
-    def __str__(self):
-        if self.is_draw():
-            return f"{self.pokemon_1.name} vs {self.pokemon_2.name} → Empate"
-        return f"{self.pokemon_1.name} vs {self.pokemon_2.name} → Ganador: {self.winner.name}"
+    def calculate_winner(self):
+        stats = [
+            'hp',
+            'attack',
+            'defense',
+            'special_attack',
+            'special_defense',
+            'speed',
+        ]
+
+        p1_score = 0
+        p2_score = 0
+
+        for stat in stats:
+            stat_1 = getattr(self.pokemon_1, stat, 0)
+            stat_2 = getattr(self.pokemon_2, stat, 0)
+            if stat_1 > stat_2:
+                p1_score += 1
+            elif stat_2 > stat_1:
+                p2_score += 1
+
+        # Comparar total sin modificar modelo Pokemon
+        total_1 = sum(getattr(self.pokemon_1, stat, 0) for stat in stats)
+        total_2 = sum(getattr(self.pokemon_2, stat, 0) for stat in stats)
+
+        if total_1 > total_2:
+            p1_score += 1
+        elif total_2 > total_1:
+            p2_score += 1
+
+        if p1_score > p2_score:
+            self.winner = self.pokemon_1
+        elif p2_score > p1_score:
+            self.winner = self.pokemon_2
+        else:
+            self.winner = None  # Empate
