@@ -1,4 +1,3 @@
-"""
 from django.db import models
 from pokemon.models import Pokemon
 
@@ -15,5 +14,3 @@ class Comparison(models.Model):
         if self.is_draw():
             return f"{self.pokemon_1.name} vs {self.pokemon_2.name} → Empate"
         return f"{self.pokemon_1.name} vs {self.pokemon_2.name} → Ganador: {self.winner.name}"
-
-"""

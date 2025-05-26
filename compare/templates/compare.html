@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Comparador Pokémon{% endblock %}
+
+{% block content %}
+<h1>Comparar Pokémon</h1>
+
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Comparar</button>
+</form>
+
+{% if result %}
+    <hr>
+    <h2>Resultado</h2>
+    <p><strong>{{ result.comparison.pokemon_1.name }}:</strong> {{ result.p1_score }}</p>
+    <p><strong>{{ result.comparison.pokemon_2.name }}:</strong> {{ result.p2_score }}</p>
+    {% if result.comparison.is_draw %}
+        <p><strong>Empate</strong></p>
+    {% else %}
+        <p><strong>Ganador:</strong> {{ result.comparison.winner.name }}</p>
+    {% endif %}
+{% endif %}
+{% endblock %}
