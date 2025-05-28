@@ -3,23 +3,68 @@
 {% block title %}Comparador Pokémon{% endblock %}
 
 {% block content %}
-<h1>Comparar Pokémon</h1>
 
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Comparar</button>
-</form>
+    <link rel="stylesheet" href="{% static 'compare.css' %}">
 
-{% if result %}
-    <hr>
-    <h2>Resultado</h2>
-    <p><strong>{{ result.comparison.pokemon_1.name }}:</strong> {{ result.p1_score }}</p>
-    <p><strong>{{ result.comparison.pokemon_2.name }}:</strong> {{ result.p2_score }}</p>
-    {% if result.comparison.is_draw %}
-        <p><strong>Empate</strong></p>
-    {% else %}
-        <p><strong>Ganador:</strong> {{ result.comparison.winner.name }}</p>
+    <h1>Comparar Pokémon</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_pokemon_1">Pokémon 1</label>
+            {{ form.pokemon_1 }}
+        </div>
+        <div class="form-group">
+            <label for="id_pokemon_2">Pokémon 2</label>
+            {{ form.pokemon_2 }}
+        </div>
+        <button type="submit" class="btn btn-primary">Comparar</button>
+    </form>
+
+    {% if comparison %}
+        <div class="right-side">
+            <div class="winner-announcement">
+                {% if comparison.is_draw %}
+                    <h2>¡Es un empate!</h2>
+                {% else %}
+                    <h2>Ganador: {{ comparison.winner.name }}</h2>
+                {% endif %}
+            </div>
+
+            <div class="comparison-result">
+                <div id="pokemon_1" class="pokemon-column">
+                    <h3>{{ comparison.pokemon_1.name }}</h3>
+                    <img src="{{ comparison.pokemon_1.sprite_default }}" alt="{{ comparison.pokemon_1.name }}">
+                    <ul>
+                        <li class="{{ stat_colors.hp.0 }}">HP: {{ comparison.pokemon_1.hp }}</li>
+                        <li class="{{ stat_colors.attack.0 }}">Ataque: {{ comparison.pokemon_1.attack }}</li>
+                        <li class="{{ stat_colors.defense.0 }}">Defensa: {{ comparison.pokemon_1.defense }}</li>
+                        <li class="{{ stat_colors.special_attack.0 }}">Atq. Esp.: {{ comparison.pokemon_1.special_attack }}</li>
+                        <li class="{{ stat_colors.special_defense.0 }}">Def. Esp.: {{ comparison.pokemon_1.special_defense }}</li>
+                        <li class="{{ stat_colors.speed.0 }}">Velocidad: {{ comparison.pokemon_1.speed }}</li>
+                        <li class="{{ stat_colors.total.0 }}">Total:
+                            {{ comparison.pokemon_1.hp|add:comparison.pokemon_1.attack|add:comparison.pokemon_1.defense|add:comparison.pokemon_1.special_attack|add:comparison.pokemon_1.special_defense|add:comparison.pokemon_1.speed }}
+                        </li>
+                    </ul>
+                </div>
+
+                <div id="pokemon_2" class="pokemon-column">
+                    <h3>{{ comparison.pokemon_2.name }}</h3>
+                    <img src="{{ comparison.pokemon_2.sprite_default }}" alt="{{ comparison.pokemon_2.name }}">
+                    <ul>
+                        <li class="{{ stat_colors.hp.1 }}">HP: {{ comparison.pokemon_2.hp }}</li>
+                        <li class="{{ stat_colors.attack.1 }}">Ataque: {{ comparison.pokemon_2.attack }}</li>
+                        <li class="{{ stat_colors.defense.1 }}">Defensa: {{ comparison.pokemon_2.defense }}</li>
+                        <li class="{{ stat_colors.special_attack.1 }}">Atq. Esp.: {{ comparison.pokemon_2.special_attack }}</li>
+                        <li class="{{ stat_colors.special_defense.1 }}">Def. Esp.: {{ comparison.pokemon_2.special_defense }}</li>
+                        <li class="{{ stat_colors.speed.1 }}">Velocidad: {{ comparison.pokemon_2.speed }}</li>
+                        <li class="{{ stat_colors.total.1 }}">Total:
+                            {{ comparison.pokemon_2.hp|add:comparison.pokemon_2.attack|add:comparison.pokemon_2.defense|add:comparison.pokemon_2.special_attack|add:comparison.pokemon_2.special_defense|add:comparison.pokemon_2.speed }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     {% endif %}
-{% endif %}
 {% endblock %}
+
+
