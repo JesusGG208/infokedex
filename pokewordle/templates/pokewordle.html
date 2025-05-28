@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Pokewordle - Adivina el Pokémon{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'pokewordle.css' %}">
+
+<div class="pokewordle-container">
+    <h1>Pokewordle</h1>
+
+    <p>Adivina el nombre del Pokémon. Tienes {{ max_attempts }} intentos.</p>
+
+    <form method="post" autocomplete="off">
+        {% csrf_token %}
+        <input type="text" name="guess" placeholder="Escribe tu intento..." autofocus required
+               value="{{ guess|default:'' }}">
+        <button type="submit">Intentar</button>
+    </form>
+
+    {% if error_message %}
+        <p class="error">{{ error_message }}</p>
+    {% endif %}
+
+    <div class="attempts">
+        <h2>Intentos:</h2>
+        <ul>
+            {% for attempt in attempts %}
+                <li class="attempt-result">
+                    {% for letter_info in attempt.letters %}
+                        <span class="letter
+                            {% if letter_info.color == 'green' %} correct-letter
+                            {% elif letter_info.color == 'yellow' %} partial-letter
+                            {% else %} wrong-letter
+                            {% endif %}">
+                            {{ letter_info.letter|upper }}
+                        </span>
+                    {% endfor %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    {% if show_hint_1 %}
+        <div class="hint">
+            <strong>Pista 1 - Habilidad:</strong> {{ hint_1 }}
+        </div>
+    {% endif %}
+
+    {% if show_hint_2 %}
+        <div class="hint">
+            <strong>Pista 2 - Tipo(s):</strong> {{ hint_2|join:", " }}
+        </div>
+    {% endif %}
+
+    {% if game_over %}
+        {% if won %}
+            <h2>¡Felicidades! Has adivinado correctamente: {{ pokemon_name }}</h2>
+            <img src="{{ pokemon_sprite }}" alt="{{ pokemon_name }}">
+        {% else %}
+            <h2>Juego terminado. El Pokémon era: {{ pokemon_name }}</h2>
+            <img src="{{ pokemon_sprite }}" alt="{{ pokemon_name }}">
+        {% endif %}
+        <a href="{% url 'pokewordle:start' %}">Jugar de nuevo</a>
+    {% endif %}
+</div>
+
+{% endblock %}
