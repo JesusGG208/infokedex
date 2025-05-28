@@ -3,7 +3,8 @@ from django.http import JsonResponse
 from django.views import View
 from django.views.generic import DetailView, ListView, TemplateView
 from django.db.models import Q
-from pokemon.models import Pokemon, Type
+from pokemon.models import Pokemon, Type, PokemonType
+from django.db.models import Prefetch
 from django.shortcuts import render
 
 class HomePageView(TemplateView):
@@ -33,6 +34,12 @@ class PokemonListView(ListView):
     def get_queryset(self):
         queryset = Pokemon.objects.all()
 
+        queryset = queryset.prefetch_related(
+            Prefetch('types', queryset=PokemonType.objects.select_related('type')),
+            'evolves_from',
+            'evolves_to'
+        )
+
         search_query = self.request.GET.get('q', '').strip()
         if search_query:
             queryset = queryset.filter(
@@ -57,7 +64,6 @@ class PokemonListView(ListView):
             elif evo_stage == '3':
                 queryset = queryset.filter(evolves_from__isnull=False, evolves_to__isnull=True)
             elif evo_stage == '4':
-                # Sin evolución
                 queryset = queryset.filter(evolves_from__isnull=True, evolves_to__isnull=True)
 
         return queryset.distinct()
