@@ -25,15 +25,6 @@
     opacity: 0.1;
 }
 
-.header h1 {
-    margin: 0;
-    font-size: 2.8rem;
-    font-weight: 800;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    position: relative;
-    letter-spacing: 1px;
-}
-
 .header p {
     margin-top: 0.5rem;
     font-size: 1.2rem;
@@ -121,6 +112,11 @@
     border-radius: 15px;
 }
 
+#search-input:focus {
+    border-color: var(--pokemon-red);
+    box-shadow: 0 0 0 3px var(--pokemon-red);
+}
+
 #search-input::placeholder {
     color: #aaa;
 }
@@ -133,11 +129,13 @@
 }
 
 .explore-section h2 {
-    color: var(--pokemon-dark-blue);
-    font-size: 2rem;
     text-align: center;
-    margin-bottom: 0.5rem;
-    position: relative;
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--pokemon-dark-blue);
+    margin-bottom: 2rem;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+    font-family: inherit;
 }
 
 .explore-section h2::after {

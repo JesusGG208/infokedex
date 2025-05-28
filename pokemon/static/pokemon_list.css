@@ -3,13 +3,14 @@
     to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
 h1 {
     text-align: center;
-    color: var(--pokemon-blue);
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: var(--pokemon-dark-blue);
+    margin-bottom: 2rem;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+    font-family: inherit;
 }
 
 h1::after {
@@ -49,7 +50,8 @@ p {
 }
 
 #search-input:focus {
-    box-shadow: 0 0 0 3px var(--pokemon-yellow);
+    border-color: var(--pokemon-red);
+    box-shadow: 0 0 0 3px var(--pokemon-red);
 }
 
 #search-input::placeholder {
@@ -98,8 +100,8 @@ p {
 
 .filters select:focus {
     outline: none;
-    border-color: var(--pokemon-blue);
-    box-shadow: 0 0 0 2px var(--pokemon-yellow);
+    border-color: var(--pokemon-red);
+    box-shadow: 0 0 0 3px var(--pokemon-red);
 }
 
 /* Tabla de Pokémon */
