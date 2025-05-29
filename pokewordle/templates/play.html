@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}PokéWordle{% endblock %}
+
+{% block content %}
+
+    <link rel="stylesheet" href="{% static 'pokewordle.css' %}">
+    <h1>PokéWordle</h1>
+
+    {% if game.completed %}
+        {% if game.success %}
+            <p>¡Correcto! El Pokémon era {{ game.pokemon.name }}.</p>
+        {% else %}
+            <p>Has perdido. El Pokémon era {{ game.pokemon.name }}.</p>
+        {% endif %}
+    {% else %}
+        <form method="post">{% csrf_token %}
+            <input type="text" name="guess" placeholder="Adivina el Pokémon" required>
+            <button type="submit">Enviar</button>
+        </form>
+    {% endif %}
+
+    <h3>Intentos:</h3>
+    <ul>
+        {% for guess in guesses %}
+            <li>{{ guess.guess_text }} {% if guess.is_correct %}✔️{% endif %}</li>
+        {% endfor %}
+    </ul>
+
+    {% if hint_1 %}<p><strong>Pista 1:</strong> Habilidades: {{ hint_1 }}</p>{% endif %}
+    {% if hint_2 %}<p><strong>Pista 2:</strong> Generación: {{ hint_2 }}</p>{% endif %}
+    {% if hint_3 %}<p><strong>Pista 3:</strong> Tipo/s: {{ hint_3 }}</p>{% endif %}
+
+{% endblock %}

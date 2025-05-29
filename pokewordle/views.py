@@ -1,85 +1,50 @@
-import random
-from django.views import View
-from django.shortcuts import render, redirect, get_object_or_404
+from django.views.generic import DetailView, View
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
-from .models import PokewordleGame, PokewordleAttempt, PokewordleHint
-from pokemon.models import Pokemon, PokemonAbility, PokemonType
+from .models import PokewordleGame, PokewordleGuess
+from pokemon.models import Pokemon
+import random
 
-
-class StartGameView(View):
-    def get(self, request, *args, **kwargs):
+class StartPokewordleGame(View):
+    def get(self, request):
         pokemon = random.choice(Pokemon.objects.all())
-        game = PokewordleGame.objects.create(pokemon_to_guess=pokemon)
-        return redirect(reverse('pokewordle:play_game', kwargs={'game_id': game.id}))
+        game = PokewordleGame.objects.create(pokemon=pokemon)
+        return redirect(reverse('pokewordle:play', kwargs={'pk': game.pk}))
 
+class PlayPokewordleGame(DetailView):
+    model = PokewordleGame
+    template_name = 'play.html'
+    context_object_name = 'game'
 
-class PlayGameView(View):
-    template_name = 'pokewordle.html'
+    def post(self, request, *args, **kwargs):
+        game = self.get_object()
+        if game.completed:
+            return redirect(reverse('pokewordle:play', kwargs={'pk': game.pk}))
 
-    def get(self, request, game_id, *args, **kwargs):
-        game = get_object_or_404(PokewordleGame, id=game_id)
-        context = self.get_context_data(game=game, message='', hint1=None, hint2=None)
-        return render(request, self.template_name, context)
+        guess_text = request.POST.get('guess', '').strip()
+        is_correct = guess_text.lower() == game.pokemon.name.lower()
 
-    def post(self, request, game_id, *args, **kwargs):
-        game = get_object_or_404(PokewordleGame, id=game_id)
-        guess = request.POST.get('guess', '').strip().lower()
-        message = ''
-        hint1 = None
-        hint2 = None
+        PokewordleGuess.objects.create(game=game, guess_text=guess_text, is_correct=is_correct)
 
-        if game.is_finished:
-            # Si ya terminó, solo mostrar resultado
-            context = self.get_context_data(game=game, message=message, hint1=hint1, hint2=hint2)
-            return render(request, self.template_name, context)
-
-        is_correct = guess == game.pokemon_to_guess.name.lower()
-        PokewordleAttempt.objects.create(game=game, guess=guess, is_correct=is_correct)
-
+        game.attempts += 1
         if is_correct:
-            game.is_finished = True
-            game.save()
-            return redirect(reverse('pokewordle:play_game', kwargs={'game_id': game.id}))
-        else:
-            message = "¡Incorrecto! Sigue intentando."
-
-        attempts_count = game.attempts.count()
-
-        if attempts_count == 3:
-            abilities = PokemonAbility.objects.filter(pokemon=game.pokemon_to_guess)
-            ability_names = [a.ability.name for a in abilities]
-            hint_text = f"Habilidad: {', '.join(ability_names)}"
-            PokewordleHint.objects.create(game=game, hint_text=hint_text)
-            hint1 = hint_text
-
-        if attempts_count == 5:
-            types = PokemonType.objects.filter(pokemon=game.pokemon_to_guess).order_by('slot')
-            type_names = [t.type.name for t in types]
-            hint_text = f"Tipo(s): {', '.join(type_names)}"
-            PokewordleHint.objects.create(game=game, hint_text=hint_text)
-            hint2 = hint_text
-
-        # Mostrar pistas previas si existen
-        hints = game.hints.all().order_by('created_at')
-        if not hint1 and hints.count() >= 1:
-            hint1 = hints[0].hint_text
-        if not hint2 and hints.count() >= 2:
-            hint2 = hints[1].hint_text
-
-        context = self.get_context_data(game=game, message=message, hint1=hint1, hint2=hint2)
-        return render(request, self.template_name, context)
+            game.success = True
+            game.completed = True
+        elif game.attempts >= 7:
+            game.completed = True
+        game.save()
+        return redirect(reverse('pokewordle:play', kwargs={'pk': game.pk}))
 
     def get_context_data(self, **kwargs):
-        game = kwargs.get('game')
-        message = kwargs.get('message', '')
-        hint1 = kwargs.get('hint1')
-        hint2 = kwargs.get('hint2')
+        context = super().get_context_data(**kwargs)
+        game = self.get_object()
+        pokemon = game.pokemon
+        context['guesses'] = game.guesses.all()
 
-        context = {
-            'game': game,
-            'attempts': game.attempts.all(),
-            'message': message,
-            'hint1': hint1,
-            'hint2': hint2,
-        }
+        if game.attempts >= 2:
+            context['hint_1'] = ', '.join([a.ability.name for a in pokemon.abilities.all()])
+        if game.attempts >= 4:
+            context['hint_2'] = f"Generación {pokemon.generation}"
+        if game.attempts >= 6:
+            context['hint_3'] = ', '.join([pt.type.name for pt in pokemon.types.all()])
         return context
