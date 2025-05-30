@@ -6,8 +6,104 @@
     <link rel="stylesheet" href="{% static 'pokemon_detail.css' %}">
 
     <h1>{{ pokemon.name }}</h1>
+
+    <p>
+        {% for pokemon_type in pokemon.types.all %}
+            <img src="{{ pokemon_type.type.named_icon.url }}" alt="{{ pokemon_type.type.name }}" title="{{ pokemon_type.type.name }}" width="100">
+        {% endfor %}
+    </p>
+
+    <p>
+        Generación: {{ pokemon.generation }}
+    </p>
+
+    <img src="{{ pokemon.sprite_default }}" alt="sprite {{ pokemon.name }}">
+    <img src="{{ pokemon.sprite_shiny }}" alt="sprite {{ pokemon.name }} shiny">
     <img src="{{ pokemon.official_artwork_default }}" alt="{{ pokemon.name }}">
+    <img src="{{ pokemon.official_artwork_shiny }}" alt="{{ pokemon.name }} shiny">
+
     <p>{{ pokemon.description }}</p>
+
+    <h2>Línea evolutiva completa</h2>
+    <div class="evolution-line">
+        {% for p in pre_evolutions %}
+            <div>
+                <img src="{{ p.sprite_default }}" alt="{{ p.name }}">
+                <p>{{ p.name }}</p>
+                <span>➜</span>
+            </div>
+        {% endfor %}
+
+        <div>
+            <strong><img src="{{ current_pokemon.sprite_default }}" alt="{{ current_pokemon.name }}"></strong>
+            <p><strong>{{ current_pokemon.name }}</strong></p>
+        </div>
+
+        {% if post_evolutions %}
+            <p>Puede evolucionar a:</p>
+            {% for p in post_evolutions %}
+                <div>
+                    <span>➜</span>
+                    <img src="{{ p.sprite_default }}" alt="{{ p.name }}">
+                    <p>{{ p.name }}</p>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+
+    <h2>Stats base</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nombre estadística</th>
+                <th colspan="2">Valor estadística base</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>PS</td>
+                <td>{{ pokemon.hp }}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Ataque</td>
+                <td>{{ pokemon.attack }}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Defensa</td>
+                <td>{{ pokemon.defense }}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Ataque Especial</td>
+                <td>{{ pokemon.special_attack }}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Defensa Especial</td>
+                <td>{{ pokemon.special_defense }}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Velocidad</td>
+                <td>{{ pokemon.speed }}</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Habilidades</h2>
+    {% for p_ability in pokemon.ability.all %}
+        <h3>Normales</h3>
+        {{ p_ability }}
+        {% if p_ability.is_hidden %}
+            <h3>Oculta</h3>
+            {{ p_ability }}
+        {% endif %}
+    {% endfor %}
+
     <p>Altura: {{ pokemon.height }} | Peso: {{ pokemon.weight }}</p>
     <a href="{% url 'pokemon:home_page' %}">Volver</a>
 {% endblock %}

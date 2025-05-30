@@ -79,5 +79,34 @@ class PokemonDetailView(DetailView):
     model = Pokemon
     template_name = 'all_templates/pokemon_detail.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        pokemon = self.object
+
+        def get_pre_evolutions(p):
+            chain = []
+            while p.evolves_from.exists():
+                p = p.evolves_from.first().from_pokemon
+                chain.insert(0, p)
+            return chain
+
+        def get_post_evolutions(p):
+            result = []
+
+            def recurse(current):
+                for evo in current.evolves_to.all():
+                    next_p = evo.to_pokemon
+                    result.append(next_p)
+                    recurse(next_p)
+
+            recurse(p)
+            return result
+
+        context['pre_evolutions'] = get_pre_evolutions(pokemon)
+        context['current_pokemon'] = pokemon
+        context['post_evolutions'] = get_post_evolutions(pokemon)
+        return context
+
+
 
 
