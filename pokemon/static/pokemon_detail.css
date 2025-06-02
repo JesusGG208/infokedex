@@ -1,235 +1,102 @@
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
+
+h1, h2, h3 {
+    font-weight: 700;
+
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    color: #222;
 }
 
-/* Header estilo Pokédex */
-.header {
-    background: linear-gradient(135deg, var(--pokemon-red) 0%, var(--pokemon-blue) 100%);
-    color: white;
-    padding: 2.5rem 1rem;
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+table {
+    border-collapse: collapse;
+    margin-top: 1rem;
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+table th, table td {
+    padding: 0.75rem;
+    border: 1px solid #ccc;
     text-align: center;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    position: relative;
-    overflow: hidden;
 }
 
-.header::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url("images/pokeball-pattern.png") repeat;
-    opacity: 0.1;
+table th {
+    background-color: #f5f5f5;
+    font-weight: 500;
 }
 
-.header h1 {
-    margin: 0;
-    font-size: 2.8rem;
-    font-weight: 800;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    position: relative;
-    letter-spacing: 1px;
-}
-
-.header p {
-    margin-top: 0.5rem;
-    font-size: 1.2rem;
-    opacity: 0.9;
-    position: relative;
-}
-
-/* Search Section - Estilo moderno */
-.search-box {
-    position: relative;
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
-    overflow: visible;
-}
-
-.search-item {
-    padding: 10px 15px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    border-bottom: 1px solid #f0f0f0;
+a {
+    color: #1e88e5;
     text-decoration: none;
-    color: #333;
-    background: white;
-    transition: all 0.2s ease;
 }
 
-.search-item:hover {
-    background-color: #f8f8f8;
+p {
+    margin-bottom: 1rem;
 }
 
-.search-item img {
-    width: 40px;
-    height: 40px;
-}
+/* Evolución */
 
-.search-item .pokemon-name {
-    font-weight: 600;
-    flex-grow: 1;
-}
-
-.search-item .pokemon-number {
-    color: #777;
-    font-size: 0.9rem;
-}
-
-.search-results {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    max-height: 250px;
-    overflow-y: auto;
-    display: none;
-    background: white;
-    border-radius: 12px;
-    border: 1px solid #eee;
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
-    z-index: 200;
-    margin-top: 8px;
-    animation: fadeIn 0.25s ease;
-}
-
-.search-results.active {
-    display: block;
-    animation: fadeIn 0.3s ease;
-}
-
-.search-section {
-    max-width: 600px;
-    margin: 2rem auto;
-}
-
-#search-input {
-    width: 100%;
-    padding: 1rem 1.5rem;
-    font-size: 1rem;
-    border: none;
-    outline: none;
-    background: transparent;
-    color: #333;
-    border-radius: 15px 15px 0 0;
-}
-
-#search-input::placeholder {
-    color: #aaa;
-}
-
-/* Explore Section - Tarjetas modernas */
-.explore-section {
-    max-width: 1200px;
-    margin: 4rem auto;
-    padding: 0 1.5rem;
-}
-
-.explore-section h2 {
-    color: var(--pokemon-dark-blue);
-    font-size: 2rem;
-    text-align: center;
-    margin-bottom: 0.5rem;
-    position: relative;
-}
-
-.explore-section h2::after {
-    content: "";
-    display: block;
-    width: 80px;
-    height: 4px;
-    background: var(--pokemon-yellow);
-    margin: 15px auto;
-    border-radius: 2px;
-}
-
-.explore-section p {
-    text-align: center;
-    color: #666;
-    font-size: 1.1rem;
-    max-width: 600px;
-    margin: 0 auto 2rem;
-}
-
-.pokemon-card {
-    background: white;
-    border-radius: 10px;
-    padding: 1.5rem 1rem;
-    text-align: center;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-    transition: all 0.3s ease;
-    text-decoration: none;
-    color: inherit;
-    border: 1px solid #eee;
-    position: relative;
-    overflow: hidden;
-}
-
-.pokemon-card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 5px;
-    background: linear-gradient(90deg, var(--pokemon-yellow) 0%, var(--pokemon-green) 100%);
-}
-
-.pokemon-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
-}
-
-.pokemon-card h3 {
-    margin: 1rem 0 0.5rem;
-    font-size: 1.2rem;
-    color: var(--pokemon-dark-blue);
-    font-weight: 600;
-}
-
-.pokemon-card img {
-    width: 120px;
-    height: 120px;
-    object-fit: contain;
-    transition: transform 0.3s ease;
-}
-
-.pokemon-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-}
-
-.types {
+.evolution-line {
     display: flex;
+    flex-direction: row;
     justify-content: center;
-    gap: 5px;
-    margin-top: 0.5rem;
+    gap: 2rem;
+    margin: 2rem 0;
 }
 
-.types img {
-    height: 16px;
+.evolution-block,
+.evolution-current {
+    text-align: center;
+}
+
+.evolution-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+    margin-top: 1rem;
+    background: #f0f0f0;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.evolution-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    background: #f0f0f0;
+    padding: 1rem;
+    border-radius: 12px;
+    width: 140px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     transition: transform 0.2s ease;
+    color: inherit;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .header h1 {
-        font-size: 2.2rem;
-    }
+.evolution-card img {
+    width: 100px;
+    height: auto;
+    margin-bottom: 0.5rem;
+}
 
-    .pokemon-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
-    }
+.evolution-card:hover {
+    transform: scale(1.05);
+}
 
-    #search-input {
-        padding: 0.8rem 1.2rem;
-    }
+.evolution-card.current {
+    background-color: #fdf0a9;
+    box-shadow: 0 0 0 3px var(--pokemon-yellow) inset;
+}
+
+.evolution-condition {
+    margin-top: 0.25rem;
+    font-size: 0.85rem;
+    color: #555;
 }

@@ -3,57 +3,82 @@
 {% block title %}{{ pokemon.name }}{% endblock %}
 
 {% block content %}
+
     <link rel="stylesheet" href="{% static 'pokemon_detail.css' %}">
 
     <h1>{{ pokemon.name }}</h1>
 
-    <p>
+    <div class="type-container">
         {% for pokemon_type in pokemon.types.all %}
             <img src="{{ pokemon_type.type.named_icon.url }}" alt="{{ pokemon_type.type.name }}" title="{{ pokemon_type.type.name }}" width="100">
         {% endfor %}
-    </p>
+    </div>
 
-    <p>
-        Generación: {{ pokemon.generation }}
-    </p>
+    <p>Generación: {{ pokemon.generation }}</p>
 
-    <img src="{{ pokemon.sprite_default }}" alt="sprite {{ pokemon.name }}">
-    <img src="{{ pokemon.sprite_shiny }}" alt="sprite {{ pokemon.name }} shiny">
-    <img src="{{ pokemon.official_artwork_default }}" alt="{{ pokemon.name }}">
-    <img src="{{ pokemon.official_artwork_shiny }}" alt="{{ pokemon.name }} shiny">
+    <div class="pokemon-images">
+        <img src="{{ pokemon.sprite_default }}" alt="sprite {{ pokemon.name }}">
+        <img src="{{ pokemon.sprite_shiny }}" alt="sprite {{ pokemon.name }} shiny">
+        <img src="{{ pokemon.official_artwork_default }}" alt="{{ pokemon.name }}">
+        <img src="{{ pokemon.official_artwork_shiny }}" alt="{{ pokemon.name }} shiny">
+    </div>
 
-    <p>{{ pokemon.description }}</p>
+    <div class="pokemon-description">
+        <p>{{ pokemon.description }}</p>
+    </div>
 
     <h2>Línea evolutiva completa</h2>
-    <div class="evolution-line">
-        {% for p in pre_evolutions %}
-            <div>
-                <img src="{{ p.sprite_default }}" alt="{{ p.name }}">
-                <p>{{ p.name }}</p>
-                <span>➜</span>
-            </div>
-        {% endfor %}
 
-        <div>
-            <strong><img src="{{ current_pokemon.sprite_default }}" alt="{{ current_pokemon.name }}"></strong>
-            <p><strong>{{ current_pokemon.name }}</strong></p>
+    <div class="evolution-line">
+        {% if preevolutions %}
+            <div class="evolution-block">
+                <h3>Preevoluciona de</h3>
+                <div class="evolution-cards">
+                    {% for pre in preevolutions %}
+                        <a href="{% url 'pokemon:pokemon_detail' pre.pokemon.id %}" class="evolution-card">
+                            <img src="{{ pre.pokemon.official_artwork_default }}" alt="{{ pre.pokemon.name }}">
+                            <span>{{ pre.pokemon.name }}</span>
+                            <small class="evolution-condition">
+                                {% if pre.trigger %}{{ pre.trigger }}{% endif %}
+                                {% if pre.level %} (Nivel {{ pre.level }}){% endif %}
+                                {% if pre.item %} (Objeto: {{ pre.item }}){% endif %}
+                            </small>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="evolution-current">
+            <h3>Actual</h3>
+            <div class="evolution-card current">
+                <img src="{{ pokemon.official_artwork_default }}" alt="{{ pokemon.name }}">
+                <span>{{ pokemon.name }}</span>
+            </div>
         </div>
 
-        {% if post_evolutions %}
-            <p>Puede evolucionar a:</p>
-            {% for p in post_evolutions %}
-                <div>
-                    <span>➜</span>
-                    <img src="{{ p.sprite_default }}" alt="{{ p.name }}">
-                    <p>{{ p.name }}</p>
+        {% if evolutions %}
+            <div class="evolution-block">
+                <h3>Evoluciona a</h3>
+                <div class="evolution-cards">
+                    {% for evo in evolutions %}
+                        <a href="{% url 'pokemon:pokemon_detail' evo.pokemon.id %}" class="evolution-card">
+                            <img src="{{ evo.pokemon.official_artwork_default }}" alt="{{ evo.pokemon.name }}">
+                            <span>{{ evo.pokemon.name }}</span>
+                            <small class="evolution-condition">
+                                {% if evo.trigger %}{{ evo.trigger }}{% endif %}
+                                {% if evo.level %} (Nivel {{ evo.level }}){% endif %}
+                                {% if evo.item %} (Objeto: {{ evo.item }}){% endif %}
+                            </small>
+                        </a>
+                    {% endfor %}
                 </div>
-            {% endfor %}
+            </div>
         {% endif %}
     </div>
 
-
     <h2>Stats base</h2>
-    <table border="1">
+    <table class="stats-table" border="1">
         <thead>
             <tr>
                 <th>Nombre estadística</th>
@@ -94,16 +119,16 @@
         </tbody>
     </table>
 
-    <h2>Habilidades</h2>
-    {% for p_ability in pokemon.ability.all %}
-        <h3>Normales</h3>
-        {{ p_ability }}
-        {% if p_ability.is_hidden %}
-            <h3>Oculta</h3>
-            {{ p_ability }}
-        {% endif %}
-    {% endfor %}
+    <div class="abilities-section">
+        <h2>Habilidades</h2>
+        {% for p_ability in pokemon.abilities.all %}
+            <div class="ability{% if p_ability.is_hidden %} hidden{% endif %}">
+                <h3>{% if p_ability.is_hidden %}Oculta{% else %}Normal{% endif %}</h3>
+                <p>{{ p_ability.ability.name }}</p>
+            </div>
+        {% endfor %}
+    </div>
 
     <p>Altura: {{ pokemon.height }} | Peso: {{ pokemon.weight }}</p>
-    <a href="{% url 'pokemon:home_page' %}">Volver</a>
+    <a href="{% url 'pokemon:home_page' %}" class="back-link">Volver</a>
 {% endblock %}

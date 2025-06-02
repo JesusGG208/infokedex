@@ -83,30 +83,30 @@ class PokemonDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         pokemon = self.object
 
-        def get_pre_evolutions(p):
-            chain = []
-            while p.evolves_from.exists():
-                p = p.evolves_from.first().from_pokemon
-                chain.insert(0, p)
-            return chain
+        # Evoluciones hacia otros
+        evolutions_q = pokemon.evolves_to.select_related('to_pokemon')
+        evolutions = [
+            {
+                'pokemon': evo.to_pokemon,
+                'trigger': evo.trigger,
+                'level': evo.level,
+                'item': evo.item,
+            }
+            for evo in evolutions_q
+        ]
 
-        def get_post_evolutions(p):
-            result = []
+        # Preevoluciones desde otros
+        preevolution_q = pokemon.evolves_from.select_related('from_pokemon')
+        preevolutions = [
+            {
+                'pokemon': evo.from_pokemon,
+                'trigger': evo.trigger,
+                'level': evo.level,
+                'item': evo.item,
+            }
+            for evo in preevolution_q
+        ]
 
-            def recurse(current):
-                for evo in current.evolves_to.all():
-                    next_p = evo.to_pokemon
-                    result.append(next_p)
-                    recurse(next_p)
-
-            recurse(p)
-            return result
-
-        context['pre_evolutions'] = get_pre_evolutions(pokemon)
-        context['current_pokemon'] = pokemon
-        context['post_evolutions'] = get_post_evolutions(pokemon)
+        context['evolutions'] = evolutions
+        context['preevolutions'] = preevolutions
         return context
-
-
-
-
