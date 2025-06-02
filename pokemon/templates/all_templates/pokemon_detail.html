@@ -5,6 +5,8 @@
 {% block content %}
 
     <link rel="stylesheet" href="{% static 'pokemon_detail.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <h1>{{ pokemon.name }}</h1>
 
@@ -33,19 +35,17 @@
         {% if preevolutions %}
             <div class="evolution-block">
                 <h3>Preevoluciona de</h3>
-                <div class="evolution-cards">
-                    {% for pre in preevolutions %}
-                        <a href="{% url 'pokemon:pokemon_detail' pre.pokemon.id %}" class="evolution-card">
-                            <img src="{{ pre.pokemon.official_artwork_default }}" alt="{{ pre.pokemon.name }}">
-                            <span>{{ pre.pokemon.name }}</span>
-                            <small class="evolution-condition">
-                                {% if pre.trigger %}{{ pre.trigger }}{% endif %}
-                                {% if pre.level %} (Nivel {{ pre.level }}){% endif %}
-                                {% if pre.item %} (Objeto: {{ pre.item }}){% endif %}
-                            </small>
-                        </a>
-                    {% endfor %}
-                </div>
+                {% for pre in preevolutions %}
+                    <a href="{% url 'pokemon:pokemon_detail' pre.pokemon.id %}" class="evolution-card">
+                        <img src="{{ pre.pokemon.official_artwork_default }}" alt="{{ pre.pokemon.name }}">
+                        <span>{{ pre.pokemon.name }}</span>
+                        <p class="evolution-condition">
+                            {% if pre.trigger %}{{ pre.trigger }}{% endif %}
+                            {% if pre.level %} (Nivel {{ pre.level }}){% endif %}
+                            {% if pre.item %} (Objeto: {{ pre.item }}){% endif %}
+                        </p>
+                    </a>
+                {% endfor %}
             </div>
         {% endif %}
 
@@ -60,25 +60,23 @@
         {% if evolutions %}
             <div class="evolution-block">
                 <h3>Evoluciona a</h3>
-                <div class="evolution-cards">
-                    {% for evo in evolutions %}
-                        <a href="{% url 'pokemon:pokemon_detail' evo.pokemon.id %}" class="evolution-card">
-                            <img src="{{ evo.pokemon.official_artwork_default }}" alt="{{ evo.pokemon.name }}">
-                            <span>{{ evo.pokemon.name }}</span>
-                            <small class="evolution-condition">
-                                {% if evo.trigger %}{{ evo.trigger }}{% endif %}
-                                {% if evo.level %} (Nivel {{ evo.level }}){% endif %}
-                                {% if evo.item %} (Objeto: {{ evo.item }}){% endif %}
-                            </small>
-                        </a>
-                    {% endfor %}
-                </div>
+                {% for evo in evolutions %}
+                    <a href="{% url 'pokemon:pokemon_detail' evo.pokemon.id %}" class="evolution-card">
+                        <img src="{{ evo.pokemon.official_artwork_default }}" alt="{{ evo.pokemon.name }}">
+                        <span>{{ evo.pokemon.name }}</span>
+                        <p class="evolution-condition">
+                            {% if evo.trigger %}{{ evo.trigger }}{% endif %}
+                            {% if evo.level %} (Nivel {{ evo.level }}){% endif %}
+                            {% if evo.item %} (Objeto: {{ evo.item }}){% endif %}
+                        </p>
+                    </a>
+                {% endfor %}
             </div>
         {% endif %}
     </div>
 
     <h2>Stats base</h2>
-    <table class="stats-table" border="1">
+    <table class="stats-table">
         <thead>
             <tr>
                 <th>Nombre estadística</th>
@@ -87,34 +85,58 @@
         </thead>
         <tbody>
             <tr>
-                <td>PS</td>
-                <td>{{ pokemon.hp }}</td>
-                <td></td>
+                <td class="stat-name">PS</td>
+                <td class="stat-value">{{ pokemon.hp }}</td>
+                <td>
+                    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="{{ pokemon.hp }}" aria-valuemin="0" aria-valuemax="255">
+                        <div class="progress-bar" style="width: calc({{ pokemon.hp }} / 255 * 100%); background-color: var(--pokemon-green)"></div>
+                    </div>
+                </td>
             </tr>
             <tr>
-                <td>Ataque</td>
-                <td>{{ pokemon.attack }}</td>
-                <td></td>
+                <td class="stat-name">Ataque</td>
+                <td class="stat-value">{{ pokemon.attack }}</td>
+                <td>
+                    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="{{ pokemon.attack }}" aria-valuemin="0" aria-valuemax="255">
+                        <div class="progress-bar" style="width: calc({{ pokemon.attack }} / 255 * 100%); background-color: var(--pokemon-red)"></div>
+                    </div>
+                </td>
             </tr>
             <tr>
-                <td>Defensa</td>
-                <td>{{ pokemon.defense }}</td>
-                <td></td>
+                <td class="stat-name">Defensa</td>
+                <td class="stat-value">{{ pokemon.defense }}</td>
+                <td>
+                    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="{{ pokemon.defense }}" aria-valuemin="0" aria-valuemax="255">
+                        <div class="progress-bar" style="width: calc({{ pokemon.defense }} / 255 * 100%); background-color: var(--pokemon-blue)"></div>
+                    </div>
+                </td>
             </tr>
             <tr>
-                <td>Ataque Especial</td>
-                <td>{{ pokemon.special_attack }}</td>
-                <td></td>
+                <td class="stat-name">Ataque Especial</td>
+                <td class="stat-value">{{ pokemon.special_attack }}</td>
+                <td>
+                    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="{{ pokemon.special_attack }}" aria-valuemin="0" aria-valuemax="255">
+                        <div class="progress-bar" style="width: calc({{ pokemon.special_attack }} / 255 * 100%); background-color: var(--pokemon-purple)"></div>
+                    </div>
+                </td>
             </tr>
             <tr>
-                <td>Defensa Especial</td>
-                <td>{{ pokemon.special_defense }}</td>
-                <td></td>
+                <td class="stat-name">Defensa Especial</td>
+                <td class="stat-value">{{ pokemon.special_defense }}</td>
+                <td>
+                    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="{{ pokemon.special_defense }}" aria-valuemin="0" aria-valuemax="255">
+                        <div class="progress-bar" style="width: calc({{ pokemon.special_defense }} / 255 * 100%); background-color: var(--pokemon-dark-blue)"></div>
+                    </div>
+                </td>
             </tr>
             <tr>
-                <td>Velocidad</td>
-                <td>{{ pokemon.speed }}</td>
-                <td></td>
+                <td class="stat-name">Velocidad</td>
+                <td class="stat-value">{{ pokemon.speed }}</td>
+                <td>
+                    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="{{ pokemon.speed }}" aria-valuemin="0" aria-valuemax="255">
+                        <div class="progress-bar" style="width: calc({{ pokemon.speed }} / 255 * 100%); background-color: var(--pokemon-yellow)"></div>
+                    </div>
+                </td>
             </tr>
         </tbody>
     </table>
