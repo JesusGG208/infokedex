@@ -1,20 +1,20 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'nav.css' %}">
 
-<nav class="navbar">
-        <div class="nav-container">
-            <a href="#" class="nav-logo">
-                <img src="{% static 'images/logo.png' %}" alt="logo" width="100">
-            </a>
-            <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
-                ☰
-            </button>
-            <ul class="nav-menu" id="nav-menu">
-                <li><a href="{% url 'pokemon:home_page' %}" class="nav-link">Inicio</a></li>
-                <li><a href="{% url 'pokemon:pokemon_list' %}" class="nav-link">Listado Pokémon</a></li>
-                <li><a href="{% url 'compare:compare' %}" class="nav-link">Comparador</a></li>
-            </ul>
-        </div>
+<nav class="nav-bar">
+    <div class="nav-container">
+        <a href="#" class="nav-logo">
+            <img src="{% static 'images/logo.png' %}" alt="logo" width="100">
+        </a>
+        <button class="navtoggle" id="navtoggle" aria-label="Toggle navigation">
+            ☰
+        </button>
+        <ul class="nav-menu" id="nav-menu">
+            <li><a href="{% url 'pokemon:home_page' %}" class="navlink {% if request.resolver_match.url_name == 'home_page' %}active text-primary fw-bold{% endif %}">Inicio</a></li>
+            <li><a href="{% url 'pokemon:pokemon_list' %}" class="navlink {% if request.resolver_match.url_name == 'pokemon_list' %}active text-primary fw-bold{% endif %}">Listado Pokémon</a></li>
+            <li><a href="{% url 'compare:compare' %}" class="navlink {% if request.resolver_match.url_name == 'compare' %}active text-primary fw-bold{% endif %}">Comparador</a></li>
+        </ul>
+    </div>
 </nav>
 
 <script src="{% static 'js/nav.js' %}"></script>

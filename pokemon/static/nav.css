@@ -1,4 +1,4 @@
-.navbar {
+.nav-bar {
     background: var(--pokemon-dark-blue);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     position: sticky;
@@ -16,7 +16,7 @@
     flex-wrap: wrap;
 }
 
-.nav-link {
+.navlink {
     text-decoration: none;
     color: white;
     font-weight: 500;
@@ -25,7 +25,7 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.nav-link:hover {
+.navlink:hover {
     color: var(--pokemon-yellow);
     transform: translateY(-1px);
 }
@@ -49,7 +49,7 @@
     width: auto;
 }
 
-.nav-toggle {
+.navtoggle {
     display: none;
     font-size: 1.5rem;
     background: none;
@@ -86,11 +86,11 @@
         animation: slideDown 0.4s ease;
     }
 
-    .nav-toggle {
+    .navtoggle {
         display: block;
     }
 
-    .nav-link {
+    .navlink {
         padding: 0.5rem 0;
     }
 }

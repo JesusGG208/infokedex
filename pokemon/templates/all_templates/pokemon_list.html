@@ -4,16 +4,18 @@
 
 {% block content %}
 
-    <link rel="stylesheet" href="{% static 'pokemon_list.css' %}">
+    {% block extra_css %}
+        <link rel="stylesheet" href="{% static 'pokemon_list.css' %}">
+    {% endblock %}
 
     <h1>Listado de Pokémon</h1>
     <p>
         Aquí podrás ver el listado completo con todos los Pokémon. <strong> Si quieres saber más sobre alguno, haz clic en su nombre.</strong>
     </p>
 
-    <div class="filters">
-        <input type="text" id="search-input" placeholder="Buscar por nombre o ID..." value="{{ request.GET.q }}">
+    <input type="text" id="search-input" placeholder="Buscar por nombre o ID..." value="{{ request.GET.q }}">
 
+    <div class="filters">
         <div class="filters-type">
             <label for="filter-type">Filtrar por tipo</label>
             <select id="filter-type">
