@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.views import View
 from django.views.generic import DetailView, ListView, TemplateView
 from django.db.models import Q
-from pokemon.models import Pokemon, Type, PokemonType
+from pokemon.models import Pokemon, Type, PokemonType, Ability
 from django.db.models import Prefetch
 from django.shortcuts import render
 
@@ -109,4 +109,14 @@ class PokemonDetailView(DetailView):
 
         context['evolutions'] = evolutions
         context['preevolutions'] = preevolutions
+        return context
+
+class AbilityDetailView(DetailView):
+    model = Ability
+    template_name = 'all_templates/ability_detail.html'
+    context_object_name = 'ability'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['pokemon_list'] = Pokemon.objects.filter(abilities__ability=self.object).distinct()
         return context

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ ability.name }}{% endblock %}
+
+{% block content %}
+    {% block extra_css %}
+         <link rel="stylesheet" href="{% static 'ability_detail.css' %}">
+    {% endblock %}
+
+    <h1>{{ ability.name }}</h1>
+    <p>{{ ability.effect }}</p>
+
+    <h2>Pokémon que tienen esta habilidad</h2>
+    <ul>
+        {% for pokemon in pokemon_list %}
+            <li><a href="{% url 'pokemon:pokemon_detail' pokemon.id %}">{{ pokemon.name }}</a></li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}
