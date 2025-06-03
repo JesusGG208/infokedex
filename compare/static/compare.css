@@ -227,30 +227,51 @@ form {
 }
 
 /* Responsive */
-@media (max-width: 900px) {
-    .content-wrapper {
-        flex-direction: column;
+@media (max-width: 768px) {
+        h1 {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
     }
 
-    form {
-        flex: 1 1 100%;
-        max-width: 100%;
-        margin-bottom: 2rem;
-    }
-
-    .right-side {
-        flex: 1 1 100%;
+    .winner-announcement h2 {
+        font-size: 1.8rem;
+        padding: 0 1rem;
+        word-break: break-word;
     }
 
     .comparison-result {
         flex-direction: column;
-        gap: 3rem;
+        gap: 2rem;
     }
 
     .pokemon-column {
-        flex: 1 1 100%;
-        max-width: 400px;
+        width: 90%;
+        padding: 1.5rem 1rem;
         margin: 0 auto;
+    }
+
+    .pokemon-column h3 {
+        font-size: 1.5rem;
+    }
+
+    .pokemon-column ul {
+        font-size: 1rem;
+    }
+
+    .form-group label {
+        font-size: 1rem;
+    }
+
+    .form-group select,
+    .form-group input[type="text"],
+    .form-group input[type="search"] {
+        font-size: 0.95rem;
+        padding: 0.75rem 1rem;
+    }
+
+    .btn-primary {
+        font-size: 1rem;
+        padding: 0.9rem 2rem;
     }
 }
 
