@@ -27,7 +27,7 @@
             <div class="pokemon-grid">
                 {% for p in pokemon %}
                 <a href="{% url 'pokemon:pokemon_detail' p.id %}" class="pokemon-card">
-                    <img src="{{ p.official_artwork_default }}" alt="{{ p.name }}" loading="lazy">
+                    <img src="{{ p.official_artwork_default }}" alt="{{ p.name }}">
                     <h3>{{ p.name }}</h3>
                     <div class="types">
                         {% for pt in p.types.all %}
