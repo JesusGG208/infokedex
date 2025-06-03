@@ -172,6 +172,14 @@ a {
 
 /* Responsive */
 @media (max-width: 768px) {
+    .pokemon-list {
+        overflow-x: auto;
+    }
+
+    table {
+        min-width: 600px;
+    }
+
     .pokemon-list thead {
         display: none;
     }
