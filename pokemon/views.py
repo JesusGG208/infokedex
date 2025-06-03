@@ -107,6 +107,9 @@ class PokemonDetailView(DetailView):
             for evo in preevolution_q
         ]
 
+        context['normal_abilities'] = pokemon.abilities.filter(is_hidden=False)
+        context['hidden_abilities'] = pokemon.abilities.filter(is_hidden=True)
+
         context['evolutions'] = evolutions
         context['preevolutions'] = preevolutions
         return context

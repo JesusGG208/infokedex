@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}{{ ability.name }}{% endblock %}
+{% block title %}Habilidad - {{ ability.name }}{% endblock %}
 
 {% block content %}
     {% block extra_css %}
@@ -11,9 +11,14 @@
     <p>{{ ability.effect }}</p>
 
     <h2>Pokémon que tienen esta habilidad</h2>
-    <ul>
+    <ul class="pokemon-list">
         {% for pokemon in pokemon_list %}
-            <li><a href="{% url 'pokemon:pokemon_detail' pokemon.id %}">{{ pokemon.name }}</a></li>
+            <li class="pokemon">
+                <a href="{% url 'pokemon:pokemon_detail' pokemon.id %}" class="pokemon-link">
+                    <img src="{{ pokemon.official_artwork_default }}" alt="{{ pokemon.name }}">
+                    <p>{{ pokemon.name }}</p>
+                </a>
+            </li>
         {% endfor %}
     </ul>
 
