@@ -1,4 +1,6 @@
-/* Tipografía responsive */
+/* ================================
+   TIPOGRAFÍA Y ENCABEZADOS
+================================= */
 h1 {
     text-align: center;
     font-size: 2.8rem;
@@ -7,7 +9,6 @@ h1 {
     margin: 1.5rem auto;
     text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
 }
-
 h1::after {
     content: "";
     display: block;
@@ -26,7 +27,6 @@ h2 {
     margin-bottom: 1.5rem;
     text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
 }
-
 h2::after {
     content: "";
     display: block;
@@ -44,79 +44,16 @@ h3 {
     margin-bottom: 1rem;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
 }
-
 h5 {
     color: var(--pokemon-yellow);
 }
 
-/* Carrusel mejorado */
-.carousel {
-    width: 100%;
-    max-width: 500px;
-    margin: 0 auto;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    background: #f8f9fa;
-}
 
-.carousel-inner {
-    border-radius: 12px;
-}
-
-.carousel-item {
-    text-align: center;
-    padding: 30px 20px;
-    min-height: 350px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.pokemon-artwork {
-    width: 100%;
-    max-width: 300px;
-    height: auto;
-    margin: 0 auto;
-    object-fit: contain;
-}
-
-.pokemon-sprite {
-    width: 100%;
-    max-width: 200px;
-    height: auto;
-    margin: 20px auto;
-    image-rendering: pixelated;
-}
-
-.carousel-control-prev,
-.carousel-control-next {
-    width: 15%;
-    opacity: 0.9;
-    transition: opacity 0.3s;
-}
-
-.carousel-control-prev:hover,
-.carousel-control-next:hover {
-    opacity: 1;
-}
-
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
-    background-color: var(--pokemon-dark-blue);
-    border-radius: 50%;
-    padding: 20px;
-    background-size: 60%;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-
-/* Header Pokémon */
 .pokemon-header {
     text-align: center;
     margin-bottom: 2rem;
     padding: 0 1rem;
 }
-
 .pokemon-meta {
     display: flex;
     justify-content: center;
@@ -127,7 +64,7 @@ h5 {
     flex-wrap: wrap;
 }
 
-/* Contenedor de tipos */
+/* Tipos */
 .type-container {
     display: flex;
     justify-content: center;
@@ -135,30 +72,26 @@ h5 {
     gap: 1rem;
     margin: 1.5rem 0;
 }
-
 .type-container img {
     width: 100px;
     height: auto;
     transition: transform 0.2s;
 }
-
 .type-container img:hover {
     transform: scale(1.1);
 }
 
-/* Contenedor principal de información */
+/* Carrusel e info principal */
 .pokemon-main-info {
     display: flex;
     flex-direction: row;
     gap: 2rem;
     align-items: stretch;
     justify-content: center;
-    max-width: 1200px;
     margin: 2rem auto;
     flex-wrap: wrap;
+    max-width: 1000px;
 }
-
-/* Contenedor de imágenes a la izquierda */
 .pokemon-images-container {
     background: rgba(255, 255, 255, 0.7);
     padding: 1.5rem;
@@ -171,7 +104,35 @@ h5 {
     align-items: center;
 }
 
-/* Contenedor de texto a la derecha */
+.carousel-item {
+    position: relative;
+    display: none;
+    float: left;
+    width: 100%;
+    margin-right: -100%;
+    backface-visibility: hidden;
+    transition: transform .6s ease-in-out;
+}
+.carousel-item img {
+    height: 475px;
+    width: 475px;
+}
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: var(--pokemon-dark-blue);
+    border-radius: 50%;
+    padding: 20px;
+    background-size: 60%;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    opacity: 1;
+}
+.pokemon-sprite {
+    image-rendering: pixelated;
+}
+
 .pokemon-main-text-info {
     flex: 1 1 400px;
     display: flex;
@@ -187,44 +148,39 @@ h5 {
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
-
 .pokemon-description p {
     text-align: center;
     line-height: 1.6;
 }
 
-/* Habilidades */
+/* Sección habilidades */
 .abilities-section {
     background: rgba(255, 255, 255, 0.7);
     padding: 1.5rem;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
-
 .abilities-name {
     text-align: center;
     margin: 0.5rem 0;
 }
-
 .abilities-name a {
     color: var(--pokemon-dark-blue);
     font-weight: 600;
     text-decoration: none;
     transition: color 0.3s;
 }
-
 .abilities-name a:hover {
     color: var(--pokemon-red);
     text-decoration: underline;
 }
-
 .message-abilities-not-found {
     text-align: center;
     font-style: italic;
     color: #888;
 }
 
-/* Evolución */
+/* Evolución sección */
 .evolution-section {
     background: rgba(255, 255, 255, 0.7);
     padding: 1.5rem;
@@ -233,7 +189,6 @@ h5 {
     max-width: 1000px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
-
 .evolution-line {
     display: flex;
     flex-direction: column;
@@ -241,14 +196,12 @@ h5 {
     gap: 2rem;
     margin: 2rem 0;
 }
-
 .evolution-block,
 .evolution-current {
     text-align: center;
     flex: 1;
     min-width: 200px;
 }
-
 .evolution-card {
     display: flex;
     flex-direction: column;
@@ -264,23 +217,19 @@ h5 {
     transition: all 0.3s ease;
     color: inherit;
 }
-
 .evolution-card img {
     width: 100px;
     height: auto;
     margin-bottom: 0.5rem;
 }
-
 .evolution-card:hover {
     transform: scale(1.05);
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
-
 .evolution-card.current {
     background-color: #fdf0a9;
     box-shadow: 0 0 0 3px var(--pokemon-yellow) inset;
 }
-
 .evolution-condition {
     margin-top: 0.5rem;
     font-size: 0.85rem;
@@ -297,7 +246,6 @@ h5 {
     max-width: 1000px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
-
 .stats-table {
     width: 100%;
     max-width: 800px;
@@ -308,27 +256,22 @@ h5 {
     background: white;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
 }
-
 thead {
     background: linear-gradient(90deg, var(--pokemon-yellow), var(--pokemon-green));
     color: white;
 }
-
 thead th {
     padding: 1rem;
     font-size: 1rem;
-    text-align: left;
     text-shadow: 1px 1px rgba(0,0,0,0.1);
+    text-align: center;
 }
-
 tbody tr {
     border-top: 1px solid #f0f0f0;
 }
-
 tbody tr:hover {
     background-color: #fafafa;
 }
-
 td {
     padding: 0.75rem 1rem;
     text-align: left;
@@ -336,25 +279,21 @@ td {
     font-size: 0.95rem;
     color: #333;
 }
-
 .stat-name {
     font-weight: 600;
     width: 120px;
 }
-
 .stat-value {
     width: 60px;
     text-align: center;
     font-weight: 600;
 }
-
 .progress {
     height: 10px;
     background-color: #e9ecef;
     border-radius: 5px;
     overflow: hidden;
 }
-
 .progress-bar {
     height: 100%;
     border-radius: 5px;
@@ -368,7 +307,6 @@ td {
     margin: 3rem 0;
     flex-wrap: wrap;
 }
-
 .back-link {
     color: var(--pokemon-dark-blue);
     font-weight: bold;
@@ -378,7 +316,6 @@ td {
     border: 2px solid var(--pokemon-dark-blue);
     border-radius: 30px;
 }
-
 .back-link:hover {
     background-color: var(--pokemon-dark-blue);
     color: white;
@@ -386,7 +323,7 @@ td {
     text-decoration: none;
 }
 
-/* Media Queries */
+/* RESPONSIVE */
 @media (min-width: 768px) {
     .evolution-line {
         flex-direction: row;
@@ -399,7 +336,7 @@ td {
     }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 480px) {
     h1 {
         font-size: 2.2rem;
     }
@@ -417,16 +354,17 @@ td {
         max-width: 100%;
     }
 
-    .pokemon-artwork {
-        max-width: 250px;
-    }
-
-    .pokemon-sprite {
-        max-width: 150px;
-    }
-
     .navigation {
         flex-direction: column;
         align-items: center;
+    }
+
+    .carousel-item img {
+        height: 250px;
+        width: 250px;
+    }
+
+    .carousel-caption {
+        padding: 5px;
     }
 }
