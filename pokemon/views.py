@@ -83,35 +83,25 @@ class PokemonDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         pokemon = self.object
 
-        # Evoluciones hacia otros
-        evolutions_q = pokemon.evolves_to.select_related('to_pokemon')
-        evolutions = [
-            {
-                'pokemon': evo.to_pokemon,
-                'trigger': evo.trigger,
-                'level': evo.level,
-                'item': evo.item,
-            }
-            for evo in evolutions_q
-        ]
+        # Agrupar función para transformar evoluciones
+        def format_evolutions(queryset, attr_name):
+            return [
+                {
+                    'pokemon': getattr(evo, attr_name),
+                    'trigger': evo.trigger,
+                    'level': evo.level,
+                    'item': evo.item,
+                }
+                for evo in queryset.select_related(attr_name)
+            ]
 
-        # Preevoluciones desde otros
-        preevolution_q = pokemon.evolves_from.select_related('from_pokemon')
-        preevolutions = [
-            {
-                'pokemon': evo.from_pokemon,
-                'trigger': evo.trigger,
-                'level': evo.level,
-                'item': evo.item,
-            }
-            for evo in preevolution_q
-        ]
+        context.update({
+            'evolutions': format_evolutions(pokemon.evolves_to, 'to_pokemon'),
+            'preevolutions': format_evolutions(pokemon.evolves_from, 'from_pokemon'),
+            'normal_abilities': pokemon.abilities.filter(is_hidden=False),
+            'hidden_abilities': pokemon.abilities.filter(is_hidden=True),
+        })
 
-        context['normal_abilities'] = pokemon.abilities.filter(is_hidden=False)
-        context['hidden_abilities'] = pokemon.abilities.filter(is_hidden=True)
-
-        context['evolutions'] = evolutions
-        context['preevolutions'] = preevolutions
         return context
 
 class AbilityDetailView(DetailView):

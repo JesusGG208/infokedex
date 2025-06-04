@@ -49,11 +49,65 @@ h5 {
     color: var(--pokemon-yellow);
 }
 
+/* Carrusel mejorado */
+.carousel {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    background: #f8f9fa;
+}
+
+.carousel-inner {
+    border-radius: 12px;
+}
+
+.carousel-item {
+    text-align: center;
+    padding: 30px 20px;
+    min-height: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.pokemon-artwork {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    margin: 0 auto;
+    object-fit: contain;
+}
+
+.pokemon-sprite {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    margin: 20px auto;
+    image-rendering: pixelated;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    width: 15%;
+    opacity: 0.9;
+    transition: opacity 0.3s;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    opacity: 1;
+}
+
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
     background-color: var(--pokemon-dark-blue);
-    border-radius: 5px;
+    border-radius: 50%;
     padding: 20px;
+    background-size: 60%;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
 /* Header Pokémon */
@@ -136,6 +190,7 @@ h5 {
 
 .pokemon-description p {
     text-align: center;
+    line-height: 1.6;
 }
 
 /* Habilidades */
@@ -148,11 +203,19 @@ h5 {
 
 .abilities-name {
     text-align: center;
+    margin: 0.5rem 0;
 }
 
 .abilities-name a {
     color: var(--pokemon-dark-blue);
     font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.abilities-name a:hover {
+    color: var(--pokemon-red);
+    text-decoration: underline;
 }
 
 .message-abilities-not-found {
@@ -303,6 +366,7 @@ td {
     justify-content: center;
     gap: 2rem;
     margin: 3rem 0;
+    flex-wrap: wrap;
 }
 
 .back-link {
@@ -310,17 +374,59 @@ td {
     font-weight: bold;
     text-decoration: none;
     transition: all 0.3s ease;
+    padding: 0.5rem 1rem;
+    border: 2px solid var(--pokemon-dark-blue);
+    border-radius: 30px;
 }
 
 .back-link:hover {
-    text-decoration: underline;
+    background-color: var(--pokemon-dark-blue);
+    color: white;
     transform: translateY(-3px);
+    text-decoration: none;
 }
 
+/* Media Queries */
 @media (min-width: 768px) {
     .evolution-line {
         flex-direction: row;
         justify-content: center;
         align-items: flex-start;
+    }
+
+    .carousel-item {
+        min-height: 400px;
+    }
+}
+
+@media (max-width: 576px) {
+    h1 {
+        font-size: 2.2rem;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    .pokemon-meta {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .carousel {
+        max-width: 100%;
+    }
+
+    .pokemon-artwork {
+        max-width: 250px;
+    }
+
+    .pokemon-sprite {
+        max-width: 150px;
+    }
+
+    .navigation {
+        flex-direction: column;
+        align-items: center;
     }
 }
