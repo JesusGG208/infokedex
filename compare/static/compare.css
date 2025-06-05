@@ -29,6 +29,17 @@ h1::after {
     border-radius: 2px;
 }
 
+.errorlist {
+    list-style: none;
+    text-align: center;
+    color: var(--pokemon-red);
+    font-weight: bold;
+    font-size: 25px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 0;
+}
+
 /* Contenedor principal del contenido: form a la izquierda, resultado y pokémon a la derecha */
 .content-wrapper {
     display: flex;
@@ -185,30 +196,6 @@ form {
     transition: color 0.3s ease, font-weight 0.3s ease;
 }
 
-.comparison-result li.hp {
-    color: #E53935;
-}
-
-.comparison-result li.attack {
-    color: #F4511E;
-}
-
-.comparison-result li.defense {
-    color: #3949AB;
-}
-
-.comparison-result li.special_attack {
-    color: #8E24AA;
-}
-
-.comparison-result li.special_defense {
-    color: #43A047;
-}
-
-.comparison-result li.speed {
-    color: #FDD835;
-}
-
 .comparison-result li.total {
     font-weight: 700;
     font-size: 1.2rem;
@@ -228,7 +215,7 @@ form {
 
 /* Responsive */
 @media (max-width: 768px) {
-        h1 {
+    h1 {
         font-size: 2rem;
         margin-bottom: 1.5rem;
     }

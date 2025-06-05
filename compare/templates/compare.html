@@ -11,6 +11,7 @@
     <h1>Comparar Pokémon</h1>
     <form method="post">
         {% csrf_token %}
+        {{ form.non_field_errors }}
         <div class="form-group">
             <label for="id_pokemon_1">Pokémon 1</label>
             {{ form.pokemon_1 }}
