@@ -17,6 +17,11 @@
         <div class="pokemon-meta">
             <p>Generación: {{ pokemon.generation }}</p>
             <p>Altura: {{ pokemon.height }} | Peso: {{ pokemon.weight }}</p>
+            {% if pokemon.is_legendary %}
+                <p class="message-legendary">Este pokémon es legendario.</p>
+            {% elif pokemon.is_mythical %}
+                <p class="message-mythical">Este pokémon es singular.</p>
+            {% endif %}
         </div>
     </header>
 
@@ -69,18 +74,18 @@
             <div class="abilities-section">
             <h2>Habilidades</h2>
             <h3>Normal</h3>
-            {% for ability in normal_abilities %}
+            {% for normal_ability in normal_abilities %}
                 <p class="abilities-name">
-                    <a href="{% url 'pokemon:ability_detail' ability.ability.id %}">{{ ability.ability.name }}</a>
+                    <a href="{% url 'pokemon:ability_detail' normal_ability.ability.id %}">{{ normal_ability.ability.name }}</a>
                 </p>
             {% empty %}
                 <p class="message-abilities-not-found">No hay habilidades normales</p>
             {% endfor %}
 
             <h3>Oculta</h3>
-            {% for ability in hidden_abilities %}
+            {% for hidden_ability in hidden_abilities %}
                 <p class="abilities-name">
-                    <a href="{% url 'pokemon:ability_detail' ability.ability.id %}">{{ ability.ability.name }}</a>
+                    <a href="{% url 'pokemon:ability_detail' hidden_ability.ability.id %}">{{ hidden_ability.ability.name }}</a>
                 </p>
             {% empty %}
                 <p class="message-abilities-not-found">No hay habilidades ocultas</p>
@@ -115,6 +120,9 @@
                     <img src="{{ pokemon.official_artwork_default }}" alt="{{ pokemon.name }}">
                     <span>{{ pokemon.name }}</span>
                 </div>
+                {% if not evolutions and not preevolutions %}
+                    <p>Este pokémon no tiene línea evolutiva</p>
+                {% endif %}
             </div>
 
             {% if evolutions %}
