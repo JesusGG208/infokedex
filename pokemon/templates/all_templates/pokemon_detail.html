@@ -27,25 +27,25 @@
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                         <img src="{{ pokemon.official_artwork_default }}" class="d-block pokemon-artwork" alt="{{ pokemon.name }}">
-                        <div class="carousel-caption d-md-block bg-dark bg-opacity-75 rounded">
+                        <div class="carousel-caption d-md-block bg-dark bg-opacity-50 rounded">
                             <h5>Apariencia normal</h5>
                         </div>
                     </div>
                     <div class="carousel-item">
                         <img src="{{ pokemon.official_artwork_shiny }}" class="d-block pokemon-artwork" alt="{{ pokemon.name }} shiny">
-                        <div class="carousel-caption d-md-block bg-dark bg-opacity-75 rounded">
+                        <div class="carousel-caption d-md-block bg-dark bg-opacity-50 rounded">
                             <h5>Apariencia shiny</h5>
                         </div>
                     </div>
                     <div class="carousel-item">
                         <img src="{{ pokemon.sprite_default }}" class="d-block pokemon-sprite" alt="sprite {{ pokemon.name }}">
-                        <div class="carousel-caption d-md-block bg-dark bg-opacity-75 rounded">
+                        <div class="carousel-caption d-md-block bg-dark bg-opacity-50 rounded">
                             <h5>Sprite de los videojuegos</h5>
                         </div>
                     </div>
                     <div class="carousel-item">
                         <img src="{{ pokemon.sprite_shiny }}" class="d-block pokemon-sprite" alt="sprite {{ pokemon.name }} shiny">
-                        <div class="carousel-caption d-md-block bg-dark bg-opacity-75 rounded">
+                        <div class="carousel-caption d-md-block bg-dark bg-opacity-50 rounded">
                             <h5>Sprite shiny de los videojuegos</h5>
                         </div>
                     </div>
@@ -204,7 +204,7 @@
         </table>
     </div>
 
-    <div class="navigation">
+    <div class="back-nav">
         <a href="{% url 'pokemon:home_page' %}" class="back-link">Volver al inicio</a>
         <a href="{% url 'pokemon:pokemon_list' %}" class="back-link">Volver al listado</a>
     </div>
