@@ -8,7 +8,7 @@
     {% endblock %}
 
     <header class="pokemon-header">
-        <h1>{{ pokemon.name }}</h1>
+        <h1>#{{ pokemon.pokedex_id }} - {{ pokemon.name }}</h1>
         <div class="type-container">
             {% for pokemon_type in pokemon.types.all %}
                 <img src="{{ pokemon_type.type.named_icon.url }}" alt="{{ pokemon_type.type.name }}" title="{{ pokemon_type.type.name }}" width="100">
