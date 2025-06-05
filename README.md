@@ -36,13 +36,13 @@ Los recursos que utilizaré serán los siguientes:
 ## Planificación
 El desarrollo del proyecto tendrá una duración aproximada de 3 meses, 
 siguiendo estas fases:
-1. Planificación y estructura de la página ✅(**Hecho**)
-2. Desarrollo del Backend y Frontend con Django 🟧(**En progreso**)
+1. **Planificación y estructura de la página** ✅(**Hecho**)
+2. **Desarrollo del Backend y Frontend con Django** 🟧(**En progreso**)
    - Una de las apps (PokéWordle) no está completa todavía.
-3. Implementación de Docker y Django REST Framework ❌(**Por hacer**)
+3. **Implementación de Docker y Django REST Framework** ❌(**Por hacer**)
    - Dockerizar el proyecto: hacer el docker-compose, el Dockerfile y el requirements.txt.
    - Utilzar el Django Rest Framework.
-4. Pruebas finales ❌(**Por hacer**)
+4. **Pruebas finales** ❌(**Por hacer**)
 
 ## Trabajos realizados
 El trabajo tiene 3 aplicaciones: **Pokémon**, **Compare** y **Pokéwordle**. Las primeras 2 apps están hechas.
