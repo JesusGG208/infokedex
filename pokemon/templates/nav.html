@@ -3,16 +3,21 @@
 
 <nav class="nav-bar">
     <div class="nav-container">
+        <!-- Logo -->
         <a href="#" class="nav-logo">
             <img src="{% static 'images/logo.png' %}" alt="logo" width="100">
         </a>
+
+        <!-- Botón de menú para móviles -->
         <button class="navtoggle" id="navtoggle" aria-label="Toggle navigation">
             ☰
         </button>
+
+        <!-- Menú de navegación -->
         <ul class="nav-menu" id="nav-menu">
-            <li><a href="{% url 'pokemon:home_page' %}" class="navlink {% if request.resolver_match.url_name == 'home_page' %}active text-danger fw-bold{% endif %}">Inicio</a></li>
-            <li><a href="{% url 'pokemon:pokemon_list' %}" class="navlink {% if request.resolver_match.url_name == 'pokemon_list' %}active text-danger fw-bold{% endif %}">Listado Pokémon</a></li>
-            <li><a href="{% url 'compare:compare' %}" class="navlink {% if request.resolver_match.url_name == 'compare' %}active text-danger fw-bold{% endif %}">Comparador</a></li>
+            <li><a href="{% url 'pokemon:home_page' %}" class="{% if request.resolver_match.url_name == 'home_page' %}navlink-selected fw-bold {% else %} navlink {% endif %}">Inicio</a></li>
+            <li><a href="{% url 'pokemon:pokemon_list' %}" class="{% if request.resolver_match.url_name == 'pokemon_list' %}navlink-selected fw-bold {% else %} navlink {% endif %}">Listado Pokémon</a></li>
+            <li><a href="{% url 'compare:compare' %}" class="{% if request.resolver_match.url_name == 'compare' %}navlink-selected fw-bold {% else %} navlink {% endif %}">Comparador</a></li>
         </ul>
     </div>
 </nav>

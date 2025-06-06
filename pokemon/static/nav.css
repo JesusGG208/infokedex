@@ -1,12 +1,14 @@
+/* Estilos base de la barra de navegación */
 .nav-bar {
     background: var(--pokemon-dark-blue);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     position: sticky;
     top: 0;
     z-index: 500;
-    padding: 0.8rem 1.5rem;
+    padding: 0 0;
 }
 
+/* Contenedor principal */
 .nav-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -16,8 +18,27 @@
     flex-wrap: wrap;
 }
 
+/* Estilos del logo */
+.nav-logo {
+    padding: 0.5rem;
+}
+
+/* Estilos del menú */
+.nav-menu {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    opacity: 1;
+    max-height: none;
+    overflow: visible;
+    width: auto;
+}
+
+/* Estilos de los enlaces */
 .navlink {
     text-decoration: none;
+    padding: 1rem;
     color: white;
     font-weight: 500;
     transition: all 0.3s ease;
@@ -30,25 +51,23 @@
     transform: translateY(-1px);
 }
 
-.nav-logo {
-    font-weight: 700;
-    font-size: 1.25rem;
-    color: white;
+/* Enlace activo/seleccionado */
+.navlink-selected {
     text-decoration: none;
+    padding: 1rem;
+    color: white;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: block;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: var(--pokemon-red);
 }
 
-.nav-menu {
-    display: flex;
-    list-style: none;
-    gap: 1.5rem;
-    margin: 0;
-    padding: 0;
-    opacity: 1;
-    max-height: none;
-    overflow: visible;
-    width: auto;
+.navlink-selected:hover {
+    color: var(--pokemon-yellow);
 }
 
+/* Botón de toggle para móviles */
 .navtoggle {
     display: none;
     font-size: 1.5rem;
@@ -58,7 +77,9 @@
     color: white;
 }
 
+/* Media queries para diseño responsive */
 @media (max-width: 768px) {
+    /* Animación para el menú desplegable */
     @keyframes slideDown {
         from {
             transform: translateY(-10px);
@@ -70,6 +91,7 @@
         }
     }
 
+    /* Estilos del menú en móviles */
     .nav-menu {
         display: none;
         flex-direction: column;
@@ -86,11 +108,21 @@
         animation: slideDown 0.4s ease;
     }
 
+    /* Mostrar botón de toggle en móviles */
     .navtoggle {
         display: block;
+        padding: 1rem;
     }
 
+    /* Ajustes de enlaces para móviles */
     .navlink {
-        padding: 0.5rem 0;
+        padding: 0.5rem 0 0.5rem 1rem;
+        margin: 0 1rem;
+    }
+
+    .navlink-selected {
+        padding: 0.5rem 0 0.5rem 1rem;
+        margin: 0 1rem;
+        border-radius: 15px;
     }
 }
