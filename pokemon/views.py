@@ -5,17 +5,19 @@ from django.views.generic import DetailView, ListView, TemplateView  # Vistas pr
 from django.db.models import Q, Prefetch  # Q permite hacer búsquedas OR. Prefetch mejora eficiencia
 from django.shortcuts import render  # Para renderizar plantillas HTML
 from pokemon.models import Pokemon, Type, PokemonType, Ability  # Se importan los modelos
-
+from django.contrib.auth.mixins import LoginRequiredMixin # Si el usuario no está autenticado, se redirige a la página de login.
 
 # Vista que muestra la página principal con 10 Pokémon al azar
-class HomePageView(TemplateView):
+class HomePageView(LoginRequiredMixin, TemplateView):
     template_name = 'all_templates/home.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        pokemonList = list(Pokemon.objects.all())  # Se obtienen todos los Pokémon y se convierten en lista
-        random.shuffle(pokemonList)  # Se mezclan en orden aleatorio
-        context['pokemon'] = pokemonList[:10]  # Se agregan solo los primeros 10 al contexto
+        pokemon = Pokemon.objects.all()
+        pokemon_q = pokemon.prefetch_related('types__type')
+        pokemon_list = list(pokemon_q)  # Se obtienen todos los Pokémon y se convierten en lista
+        random.shuffle(pokemon_list)  # Se mezclan en orden aleatorio
+        context['pokemon'] = pokemon_list[:10]  # Se agregan solo los primeros 10 al contexto
         return context
 
 
@@ -31,7 +33,7 @@ class SearchView(View):
 
 
 # Vista que lista todos los Pokémon, con filtros por búsqueda, tipo, generación y evolución
-class PokemonListView(ListView):
+class PokemonListView(LoginRequiredMixin, ListView):
     model = Pokemon
     template_name = 'all_templates/pokemon_list.html'
     context_object_name = 'pokemon'  # Nombre que se usará en la plantilla
@@ -42,7 +44,7 @@ class PokemonListView(ListView):
 
         # Se añaden relaciones para evitar consultas innecesarias al acceder a tipos y evoluciones
         pokemon_q = pokemon.prefetch_related(
-            Prefetch('types', queryset=PokemonType.objects.select_related('type')),
+            'types__type',
             'evolves_from',
             'evolves_to'
         )
@@ -86,7 +88,7 @@ class PokemonListView(ListView):
 
 
 # Vista para mostrar la información completa de un Pokémon específico
-class PokemonDetailView(DetailView):
+class PokemonDetailView(LoginRequiredMixin, DetailView):
     model = Pokemon
     template_name = 'all_templates/pokemon_detail.html'
 
@@ -97,13 +99,13 @@ class PokemonDetailView(DetailView):
         def get_evolution_list(evolution_queryset, attribute_name):
             evolution_list = []
             for evolution in evolution_queryset.select_related(attribute_name):
-                data = {
+                evo_details = {
                     'pokemon': getattr(evolution, attribute_name),
                     'trigger': evolution.trigger,
                     'level': evolution.level,
                     'item': evolution.item
                 }
-                evolution_list.append(data)
+                evolution_list.append(evo_details)
             return evolution_list
 
         # Se añaden evoluciones hacia adelante y hacia atrás, y habilidades visibles y ocultas
@@ -115,7 +117,7 @@ class PokemonDetailView(DetailView):
 
 
 # Vista para mostrar los detalles de una habilidad en particular
-class AbilityDetailView(DetailView):
+class AbilityDetailView(LoginRequiredMixin, DetailView):
     model = Ability
     template_name = 'all_templates/ability_detail.html'
     context_object_name = 'ability'
