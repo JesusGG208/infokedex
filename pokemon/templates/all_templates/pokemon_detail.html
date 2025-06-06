@@ -28,38 +28,38 @@
     <div class="pokemon-main-info">
         <div class="pokemon-images-container">
             <h2>Apariencia</h2>
-            <div id="carouselExampleCaptions" class="carousel slide pointer-event" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
+            <div id="carouselAppearance" class="carousel slide pointer-event" data-bs-ride="carousel">
+                <div class="carousel-inner carousel-appearance-items">
+                    <div class="carousel-item carousel-appearance-item active">
                         <img src="{{ pokemon.official_artwork_default }}" class="d-block pokemon-artwork" alt="{{ pokemon.name }}">
                         <div class="carousel-caption d-md-block bg-dark bg-opacity-50 rounded">
                             <h5>Apariencia normal</h5>
                         </div>
                     </div>
-                    <div class="carousel-item">
+                    <div class="carousel-item carousel-appearance-item">
                         <img src="{{ pokemon.official_artwork_shiny }}" class="d-block pokemon-artwork" alt="{{ pokemon.name }} shiny">
                         <div class="carousel-caption d-md-block bg-dark bg-opacity-50 rounded">
                             <h5>Apariencia shiny</h5>
                         </div>
                     </div>
-                    <div class="carousel-item">
+                    <div class="carousel-item carousel-appearance-item">
                         <img src="{{ pokemon.sprite_default }}" class="d-block pokemon-sprite" alt="sprite {{ pokemon.name }}">
                         <div class="carousel-caption d-md-block bg-dark bg-opacity-50 rounded">
                             <h5>Sprite de los videojuegos</h5>
                         </div>
                     </div>
-                    <div class="carousel-item">
+                    <div class="carousel-item carousel-appearance-item">
                         <img src="{{ pokemon.sprite_shiny }}" class="d-block pokemon-sprite" alt="sprite {{ pokemon.name }} shiny">
                         <div class="carousel-caption d-md-block bg-dark bg-opacity-50 rounded">
                             <h5>Sprite shiny de los videojuegos</h5>
                         </div>
                     </div>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselAppearance" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Previous</span>
                 </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselAppearance" data-bs-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Next</span>
                 </button>
@@ -128,17 +128,47 @@
             {% if evolutions %}
                 <div class="evolution-block">
                     <h3>Evoluciona a</h3>
-                    {% for evo in evolutions %}
-                        <a href="{% url 'pokemon:pokemon_detail' evo.pokemon.id %}" class="evolution-card">
-                            <img src="{{ evo.pokemon.official_artwork_default }}" alt="{{ evo.pokemon.name }}">
-                            <span>{{ evo.pokemon.name }}</span>
-                            <p class="evolution-condition">
-                                {% if evo.trigger %}{{ evo.trigger }}{% endif %}
-                                {% if evo.level %} (Nivel {{ evo.level }}){% endif %}
-                                {% if evo.item %} (Objeto: {{ evo.item }}){% endif %}
-                            </p>
-                        </a>
-                    {% endfor %}
+                    {% if evolutions|length > 2 %}
+                        <div id="carouselEvolution" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner carousel-evolution-items">
+                                {% for evo in evolutions %}
+                                    <div class="carousel-item carousel-evolution-item {% if forloop.first %}active{% endif %}">
+                                        <a href="{% url 'pokemon:pokemon_detail' evo.pokemon.id %}" class="evolution-card mx-auto">
+                                            <img src="{{ evo.pokemon.official_artwork_default }}" alt="{{ evo.pokemon.name }}">
+                                            <span>{{ evo.pokemon.name }}</span>
+                                            <p class="evolution-condition">
+                                                {% if evo.trigger %}{{ evo.trigger }}{% endif %}
+                                                {% if evo.level %} (Nivel {{ evo.level }}){% endif %}
+                                                {% if evo.item %} (Objeto: {{ evo.item }}){% endif %}
+                                            </p>
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselEvolution" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Anterior</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselEvolution" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Siguiente</span>
+                            </button>
+                        </div>
+                    {% else %}
+                        <div class="d-flex flex-wrap justify-content-center gap-3">
+                            {% for evo in evolutions %}
+                                <a href="{% url 'pokemon:pokemon_detail' evo.pokemon.id %}" class="evolution-card">
+                                    <img src="{{ evo.pokemon.official_artwork_default }}" alt="{{ evo.pokemon.name }}">
+                                    <span>{{ evo.pokemon.name }}</span>
+                                    <p class="evolution-condition">
+                                        {% if evo.trigger %}{{ evo.trigger }}{% endif %}
+                                        {% if evo.level %} (Nivel {{ evo.level }}){% endif %}
+                                        {% if evo.item %} (Objeto: {{ evo.item }}){% endif %}
+                                    </p>
+                                </a>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
             {% endif %}
         </div>

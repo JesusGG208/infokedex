@@ -75,7 +75,9 @@ h5 {
 }
 
 .message-mythical {
-
+    color: silver;
+    font-weight: bold;
+    font-size: 20px;
 }
 
 /* Tipos */
@@ -118,19 +120,11 @@ h5 {
     align-items: center;
 }
 
-.carousel-item {
-    position: relative;
-    display: none;
-    float: left;
-    width: 100%;
-    margin-right: -100%;
-    backface-visibility: hidden;
-    transition: transform .6s ease-in-out;
-}
-.carousel-item img {
+.carousel-appearance-item img {
     height: 475px;
     width: 475px;
 }
+
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
     background-color: var(--pokemon-dark-blue);
@@ -251,6 +245,10 @@ h5 {
     line-height: 1.4;
 }
 
+.carousel-evolution-items {
+    padding: 1rem;
+}
+
 /* Stats */
 .stats-section {
     background: rgba(255, 255, 255, 0.7);
@@ -353,7 +351,7 @@ td {
         align-items: flex-start;
     }
 
-    .carousel-item {
+    .carousel-appearance-item {
         min-height: 400px;
     }
 }
@@ -372,7 +370,7 @@ td {
         gap: 0.5rem;
     }
 
-    .carousel {
+    #carouselAppearance {
         max-width: 100%;
     }
 
@@ -381,7 +379,7 @@ td {
         align-items: center;
     }
 
-    .carousel-item img {
+    .carousel-appearance-item img {
         height: 250px;
         width: 250px;
     }
