@@ -39,6 +39,7 @@ siguiendo estas fases:
 1. **Planificación y estructura de la página** ✅(**Hecho**)
 2. **Desarrollo del Backend y Frontend con Django** 🟧(**En progreso**)
    - Una de las apps (PokéWordle) no está completa todavía.
+   - Los tests no están hechos.
 3. **Implementación de Docker y Django REST Framework** ❌(**Por hacer**)
    - Dockerizar el proyecto: hacer el docker-compose, el Dockerfile y el requirements.txt.
    - Utilzar el Django Rest Framework.
