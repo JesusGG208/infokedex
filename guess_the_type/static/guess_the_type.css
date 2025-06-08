@@ -63,7 +63,7 @@
 }
 
 /* Botón principal */
-.answer {
+.answer, .play-again {
     background: linear-gradient(135deg, var(--pokemon-red), var(--pokemon-blue));
     color: white;
     font-weight: 700;
@@ -123,7 +123,7 @@
         font-size: 1rem;
     }
 
-    .answer {
+    .answer, .play-again {
         width: 100%;
     }
 }
