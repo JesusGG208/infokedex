@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class PokewordleConfig(AppConfig):
+class GuessTheTypeConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'pokewordle'
+    name = 'guess_the_type'

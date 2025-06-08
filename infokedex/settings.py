@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'pokemon.apps.PokemonConfig',
     'compare.apps.CompareConfig',
-    'pokewordle.apps.PokewordleConfig',
+    'guess_the_type.apps.GuessTheTypeConfig',
     'debug_toolbar',
 ]
 

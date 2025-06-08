@@ -37,25 +37,25 @@ Los recursos que utilizaré serán los siguientes:
 El desarrollo del proyecto tendrá una duración aproximada de 3 meses, 
 siguiendo estas fases:
 1. **Planificación y estructura de la página** ✅(**Hecho**)
-2. **Desarrollo del Backend y Frontend con Django** 🟧(**En progreso**)
-   - Una de las apps (PokéWordle) no está completa todavía.
-   - Los tests no están hechos.
+2. **Desarrollo del Backend y Frontend con Django** ✅(**Hecho**)
 3. **Implementación de Docker y Django REST Framework** ❌(**Por hacer**)
    - Dockerizar el proyecto: hacer el docker-compose, el Dockerfile y el requirements.txt.
    - Utilzar el Django Rest Framework.
 4. **Pruebas finales** ❌(**Por hacer**)
 
 ## Trabajos realizados
-El trabajo tiene 3 aplicaciones: **Pokémon**, **Compare** y **Pokéwordle**. Las primeras 2 apps están hechas.
+El proyecto tiene 3 aplicaciones: **Pokémon**, **Compare** y **Guess The Type**.
 
 ## Problemas encontrados (“Problemas e incidencias durante la realización”)
 Durante la realización, he tenido los siguientes problemas:
 - Al principio, tuve que ingresar toda la información de los más de 1000 Pokémon existentes yo mismo.
 Por suerte, al buscar en Internet descubrí que un alma caritativa, Paul Hallett, creó una API llamada PokéAPI, que contenía toda la información de todos los juegos.
+- En el PokéWordle, es muy difícil hacer que se determinen las letras que estaban bien puestas.
 
 ## Modificaciones sobre el proyecto plantado inicialmente
-He añadido una aplicación, llamada **Compare**, que funciona como un comparador de Pokémon, que 
+- He añadido una aplicación, llamada **Compare**, que funciona como un comparador de Pokémon, que 
 los compara según las estadísticas de cada uno.
+- He cambiado el **PokéWordle** por otro juego, llamado **Guess The Type**.
 
 ## Posibles mejoras al proyecto (“Posibles mejoras futuras”)
 A estas alturas, no veo la posibilidad de implementar una nueva mejora actualmente.

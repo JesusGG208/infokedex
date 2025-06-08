@@ -24,7 +24,7 @@
                 <!-- Comparador -->
                 <li><a href="{% url 'compare:compare' %}" class="{% if request.resolver_match.url_name == 'compare' %}navlink-selected fw-bold{% else %}navlink{% endif %}">Comparador</a></li>
                 <!-- PokéWordle -->
-
+                <li><a href="{% url 'guess_the_type:guess_type_game' %}" class="{% if request.resolver_match.url_name == 'guess_type_game' %}navlink-selected fw-bold {% else %}navlink{% endif %}">Guess the Type</a></li>
             </ul>
             <ul class="auth-menu">
                 <!-- Esto verifica si el usuario está autenticado -->

@@ -25,7 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('pokemon.urls')),
     path('compare/', include('compare.urls')),
-    path('pokewordle/', include('pokewordle.urls')),
+    path('guess_the_type/', include('guess_the_type.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
 ] + debug_toolbar_urls()
 
