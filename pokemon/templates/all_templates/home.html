@@ -8,27 +8,38 @@
         <link rel="stylesheet" href="{% static 'home.css' %}">
     {% endblock %}
 
+    <!-- Cabecera de la página con logo y eslogan -->
     <header class="header">
         <img src="{% static 'images/logo.png' %}" alt="logo" width="300">
         <p>Tu Pokédex web de confianza</p>
     </header>
 
     <main>
+        <!-- Sección de búsqueda de Pokémon -->
         <section class="search-section">
             <div class="search-box">
+                <!-- Campo de búsqueda por nombre o número -->
                 <input type="text" id="search-input" placeholder="Busca un Pokémon por nombre o número..." >
+                <!-- Contenedor donde se mostrarán los resultados de la búsqueda -->
                 <div id="search-results" class="search-results"></div>
             </div>
         </section>
 
+        <!-- Sección de exploración de Pokémon -->
         <section class="explore-section">
             <h2>Explorar algunos Pokémon</h2>
-            <p>Estos son algunos de los pokémon que existen. Haz clic en uno de ellos para ver sus detalles.</p>
+            <p>Estos son algunos de los pokémon que existen. Si tienes interés en saber como son, <strong>haz clic en uno de ellos para ver sus detalles</strong>.</p>
+
+            <!-- Tarjetas de Pokémon -->
             <div class="pokemon-grid">
                 {% for p in pokemon %}
+                <!-- Tarjeta individual de un Pokémon -->
                 <a href="{% url 'pokemon:pokemon_detail' p.id %}" class="pokemon-card">
+                    <!-- Imagen del Pokémon -->
                     <img src="{{ p.official_artwork_default }}" alt="{{ p.name }}">
+                    <!-- Nombre del Pokémon -->
                     <h3>{{ p.name }}</h3>
+                    <!-- Iconos de tipos del Pokémon -->
                     <div class="types">
                         {% for pt in p.types.all %}
                         <img src="{{ pt.type.named_icon.url }}" alt="{{ pt.type.name }}" title="{{ pt.type.name }}" width="100">
@@ -41,4 +52,5 @@
     </main>
 
     <script src="{% static 'js/home.js' %}"></script>
+
 {% endblock %}
