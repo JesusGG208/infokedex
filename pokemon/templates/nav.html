@@ -4,7 +4,7 @@
 <nav class="nav-bar">
     <div class="nav-container">
         <!-- Logo -->
-        <a href="#" class="nav-logo">
+        <a href="{% url 'pokemon:home_page' %}" class="nav-logo">
             <img src="{% static 'images/logo.png' %}" alt="logo" width="100">
         </a>
 
@@ -14,11 +14,39 @@
         </button>
 
         <!-- Menú de navegación -->
-        <ul class="nav-menu" id="nav-menu">
-            <li><a href="{% url 'pokemon:home_page' %}" class="{% if request.resolver_match.url_name == 'home_page' %}navlink-selected fw-bold {% else %} navlink {% endif %}">Inicio</a></li>
-            <li><a href="{% url 'pokemon:pokemon_list' %}" class="{% if request.resolver_match.url_name == 'pokemon_list' %}navlink-selected fw-bold {% else %} navlink {% endif %}">Listado Pokémon</a></li>
-            <li><a href="{% url 'compare:compare' %}" class="{% if request.resolver_match.url_name == 'compare' %}navlink-selected fw-bold {% else %} navlink {% endif %}">Comparador</a></li>
-        </ul>
+        <div class="nav-menu" id="nav-menu">
+            <!-- Lista de navegación -->
+            <ul class="nav-list">
+                <!-- Página de inicio -->
+                <li><a href="{% url 'pokemon:home_page' %}" class="{% if request.resolver_match.url_name == 'home_page' %}navlink-selected fw-bold{% else %}navlink{% endif %}">Inicio</a></li>
+                <!-- Listado Pokémon -->
+                <li><a href="{% url 'pokemon:pokemon_list' %}" class="{% if request.resolver_match.url_name == 'pokemon_list' %}navlink-selected fw-bold{% else %}navlink{% endif %}">Listado Pokémon</a></li>
+                <!-- Comparador -->
+                <li><a href="{% url 'compare:compare' %}" class="{% if request.resolver_match.url_name == 'compare' %}navlink-selected fw-bold{% else %}navlink{% endif %}">Comparador</a></li>
+                <!-- PokéWordle -->
+
+            </ul>
+            <ul class="auth-menu">
+                <!-- Esto verifica si el usuario está autenticado -->
+                {% if user.is_authenticated %}
+                    <!-- Nombre de usuario -->
+                    <li><span class="auth-btn">Usuario: <strong>{{ user.username }}</strong></span></li>
+                    <!-- Cerrar sesión -->
+                    <li>
+                        <form method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="auth-btn">Cerrar sesión</button>
+                        </form>
+                    </li>
+                <!-- Si no lo está, pues aparecerá las opciones de iniciar sesión y crear una cuenta -->
+                {% else %}
+                    <!-- Iniciar sesión -->
+                    <li><a href="{% url 'login' %}" class="auth-btn">Iniciar sesión</a></li>
+                    <!-- Registrar -->
+                    <li><a href="{% url 'pokemon:register' %}" class="auth-btn">Registrarse</a></li>
+                {% endif %}
+            </ul>
+        </div>
     </div>
 </nav>
 

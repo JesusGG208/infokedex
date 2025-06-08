@@ -2,64 +2,60 @@
 .nav-bar {
     background: var(--pokemon-dark-blue);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    padding: 0;
     position: sticky;
     top: 0;
     z-index: 500;
-    padding: 0 0;
 }
 
-/* Contenedor principal */
+/* Contenedor principal de la navegación */
 .nav-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
     align-items: center;
+    display: flex;
     justify-content: space-between;
-    flex-wrap: wrap;
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 0 1rem;
 }
 
-/* Estilos del logo */
+/* Logo */
 .nav-logo {
-    padding: 0.5rem;
+    padding: 0.5rem 0;
 }
 
-/* Estilos del menú */
+/* Contenedor del menú */
 .nav-menu {
+    align-items: center;
+    display: flex;
+    gap: 1rem;
+}
+
+/* Listas de navegación */
+.nav-list,
+.auth-menu {
     display: flex;
     list-style: none;
     margin: 0;
     padding: 0;
-    opacity: 1;
-    max-height: none;
-    overflow: visible;
-    width: auto;
 }
 
-/* Estilos de los enlaces */
-.navlink {
-    text-decoration: none;
-    padding: 1rem;
+/* Enlaces del menú */
+.navlink,
+.navlink-selected {
     color: white;
-    font-weight: 500;
-    transition: all 0.3s ease;
     display: block;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-weight: 500;
+    padding: 1rem 0.8rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
 }
 
 .navlink:hover {
-    color: var(--pokemon-yellow);
-    transform: translateY(-1px);
+    background-color: var(--pokemon-yellow);
+    color: black;
 }
 
-/* Enlace activo/seleccionado */
 .navlink-selected {
-    text-decoration: none;
-    padding: 1rem;
-    color: white;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    display: block;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     background-color: var(--pokemon-red);
 }
 
@@ -67,62 +63,104 @@
     color: var(--pokemon-yellow);
 }
 
-/* Botón de toggle para móviles */
+/* Botón toggle para móviles */
 .navtoggle {
-    display: none;
-    font-size: 1.5rem;
     background: none;
     border: none;
-    cursor: pointer;
     color: white;
+    cursor: pointer;
+    display: none;
+    font-size: 1.5rem;
+    padding: 1rem;
 }
 
-/* Media queries para diseño responsive */
+/* Estilo */
+.auth-btn {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: block;
+    font-weight: 500;
+    padding: 1rem 0.8rem;
+    text-align: left;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.auth-btn:hover {
+    background-color: var(--pokemon-yellow);
+    color: black;
+}
+
+/* Diseño responsive */
 @media (max-width: 768px) {
-    /* Animación para el menú desplegable */
+    /* Animación de aparición */
     @keyframes slideDown {
         from {
-            transform: translateY(-10px);
             opacity: 0;
+            transform: translateY(-10px);
         }
         to {
-            transform: translateY(0);
             opacity: 1;
+            transform: translateY(0);
         }
     }
 
-    /* Estilos del menú en móviles */
+    /* Ajustes del contenedor */
+    .nav-container {
+        flex-wrap: wrap;
+        padding: 0;
+    }
+
+    /* Espaciado del logo */
+    .nav-logo {
+        padding: 1rem 1rem;
+    }
+
+    /* Menú colapsado por defecto */
     .nav-menu {
         display: none;
         flex-direction: column;
+        gap: 1.5rem;
+        margin-top: 0;
         width: 100%;
-        margin-top: 1rem;
-        gap: 1rem;
     }
 
+    /* Menú expandido */
     .nav-menu.active {
+        animation: slideDown 0.4s ease;
         display: flex;
         max-height: 500px;
         opacity: 1;
-        padding: 1rem 0;
-        animation: slideDown 0.4s ease;
+        padding: 0;
     }
 
-    /* Mostrar botón de toggle en móviles */
+    /* Listas verticales */
+    .nav-list,
+    .auth-menu {
+        flex-direction: column;
+        gap: 0;
+        width: 100%;
+    }
+
+    /* Mostrar el botón de toggle */
     .navtoggle {
         display: block;
+    }
+
+    /* Enlaces en vista móvil */
+    .navlink,
+    .navlink-selected,
+    .logout-btn {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 0;
+        margin: 0;
         padding: 1rem;
     }
 
-    /* Ajustes de enlaces para móviles */
-    .navlink {
-        padding: 0.5rem 0 0.5rem 1rem;
-        margin: 0 1rem;
-    }
-
     .navlink-selected {
-        padding: 0.5rem 0 0.5rem 1rem;
-        margin: 0 1rem;
-        border-radius: 15px;
+        background-color: var(--pokemon-red);
     }
 }
