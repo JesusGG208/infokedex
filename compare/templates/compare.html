@@ -12,7 +12,7 @@
     <h1>Comparar Pokémon</h1>
 
     <!-- Formulario de comparación de Pokémon -->
-    <form method="post">
+    <form method="post" class="comparison">
         {% csrf_token %}
         <!-- Muestra errores generales del formulario -->
         {{ form.non_field_errors }}
