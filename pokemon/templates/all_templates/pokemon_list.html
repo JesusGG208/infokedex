@@ -8,14 +8,17 @@
         <link rel="stylesheet" href="{% static 'pokemon_list.css' %}">
     {% endblock %}
 
-    <h1>Listado de Pokémon</h1>
-    <p>
-        Aquí podrás ver el listado completo con todos los Pokémon. <strong> Si quieres saber más sobre alguno, haz clic en su nombre.</strong>
-    </p>
+    <header>
+        <h1>Listado de Pokémon</h1>
+        <p>Aquí podrás ver el listado completo con todos los Pokémon. <strong> Si quieres saber más sobre alguno, haz clic en su nombre.</strong></p>
+    </header>
 
+    <!-- Buscador que actualiza la tabla -->
     <input type="text" id="search-input" placeholder="Buscar por nombre o ID..." value="{{ request.GET.q }}">
 
+    <!-- Los filtros por tipo, generación o posición en línea evolutiva -->
     <div class="filters">
+        <!-- Filtro por tipo -->
         <div class="filters-type">
             <label for="filter-type">Filtrar por tipo</label>
             <select id="filter-type">
@@ -26,6 +29,7 @@
             </select>
         </div>
 
+        <!-- Filtro por generación -->
         <div class="filters-generation">
             <label for="filter-generation">Filtrar por generación</label>
             <select id="filter-generation">
@@ -36,6 +40,7 @@
             </select>
         </div>
 
+        <!-- Filtro por posición en línea evolutiva -->
         <div class="filters-ev-stage">
             <label for="filter-evolution-stage">Filtrar por etapa evolutiva</label>
             <select id="filter-evolution-stage">
@@ -48,21 +53,22 @@
         </div>
     </div>
 
+    <!-- EL GRAN LISTADO POKÉMON -->
     <div id="pokemon-list" class="pokemon-list">
         <table>
             <thead>
                 <tr>
-                    <th>Pokédex ID</th>
-                    <th>Sprite</th>
-                    <th>Nombre</th>
-                    <th>Tipos</th>
-                    <th>Generación</th>
-                    <th>Fase evolutiva</th>
+                    <th>Pokédex ID</th> <!-- La columna del número/ID del pokémon según la pokédex -->
+                    <th>Sprite</th> <!-- La columna del número del pokémon según la pokédex -->
+                    <th>Nombre</th> <!-- La columna del nombre -->
+                    <th>Tipos</th> <!-- La columna de los tipos -->
+                    <th>Generación</th> <!-- La columna de la generación -->
+                    <th>Fase evolutiva</th> <!-- La columna de las posiciones en línea evolutiva -->
                 </tr>
             </thead>
             <tbody>
                 {% for p in pokemon %}
-                    <tr onclick="window.location.href='{% url 'pokemon:pokemon_detail' p.id %}'" style="cursor: pointer;">
+                    <tr onclick="window.location.href='{% url 'pokemon:pokemon_detail' p.id %}'" style="cursor: pointer;"> <!-- Esta línea sirve para que cuando se cliquée en la fila de algún pokémon te lleve a su página de detalles -->
                         <td>
                             {{ p.pokedex_id }}
                         </td>
@@ -93,6 +99,7 @@
                         </td>
                     </tr>
                 {% empty %}
+                <!-- Si cuando está buscando algún pokémon y la información no coincide con ninguno, te aparecerá este mensaje -->
                 <tr>
                     <td colspan="6">No se encontraron Pokémon con esos filtros.</td>
                 </tr>
