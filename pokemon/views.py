@@ -14,6 +14,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin # Si el usuario no est
 class RegistroUsuarioView(CreateView):
     template_name = "registration/register.html"
     form_class = UserCreationForm
+    success_url = reverse_lazy('login')
 
 # Vista que muestra la página principal con 10 Pokémon al azar
 class HomePageView(TemplateView):
