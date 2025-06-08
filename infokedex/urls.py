@@ -20,6 +20,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from debug_toolbar.toolbar import debug_toolbar_urls
 
+# Las urls de las distintas aplicaciones, el admin, las sesiones y la debug-toolbar
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('pokemon.urls')),
