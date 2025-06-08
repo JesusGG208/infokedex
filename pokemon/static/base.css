@@ -1,3 +1,4 @@
+/* Colores principales */
 :root {
     --pokemon-blue: #3B5BA7;
     --pokemon-dark-blue: #1D2C5E;
@@ -8,6 +9,7 @@
     --pokemon-yellow: #FFCB05;
 }
 
+/* Fuentes de letras, color del background y el color del texto por defecto */
 body {
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
