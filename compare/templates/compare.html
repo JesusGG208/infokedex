@@ -5,26 +5,43 @@
 {% block content %}
 
     {% block extra_css %}
+        <!-- Carga una hoja de estilo específica para esta página -->
         <link rel="stylesheet" href="{% static 'compare.css' %}">
     {% endblock %}
 
     <h1>Comparar Pokémon</h1>
+
+    <!-- Formulario de comparación de Pokémon -->
     <form method="post">
         {% csrf_token %}
+        <!-- Muestra errores generales del formulario -->
         {{ form.non_field_errors }}
+
+        <!-- Selector del primer Pokémon -->
         <div class="form-group">
             <label for="id_pokemon_1">Pokémon 1</label>
             {{ form.pokemon_1 }}
         </div>
+
+        <!-- Selector del segundo Pokémon -->
         <div class="form-group">
             <label for="id_pokemon_2">Pokémon 2</label>
             {{ form.pokemon_2 }}
         </div>
+
+        <!-- Botón para enviar el formulario -->
         <button type="submit" class="btn-compare">Comparar</button>
     </form>
 
     {% if comparison %}
+        <!-- Muestra los resultados si se ha realizado una comparación -->
         <div class="right-side">
+            <!-- Botón para limpiar la comparación actual -->
+            <form method="get" action="">
+                <button type="submit" class="btn-clear">Limpiar comparación</button>
+            </form>
+
+            <!-- Sección donde se muestra el ganador o si hubo empate -->
             <div class="winner-announcement">
                 {% if comparison.is_draw %}
                     <h2>¡Es un empate!</h2>
@@ -33,7 +50,9 @@
                 {% endif %}
             </div>
 
+            <!-- Resultados detallados de la comparación -->
             <div class="comparison-result">
+                <!-- Información del primer Pokémon -->
                 <div id="pokemon_1" class="pokemon-column">
                     <h3>{{ comparison.pokemon_1.name }}</h3>
                     <img src="{{ comparison.pokemon_1.sprite_default }}" alt="{{ comparison.pokemon_1.name }}">
@@ -44,12 +63,14 @@
                         <li class="{{ stat_colors.special_attack.0 }}">Atq. Esp.: {{ comparison.pokemon_1.special_attack }}</li>
                         <li class="{{ stat_colors.special_defense.0 }}">Def. Esp.: {{ comparison.pokemon_1.special_defense }}</li>
                         <li class="{{ stat_colors.speed.0 }}">Velocidad: {{ comparison.pokemon_1.speed }}</li>
+                        <!-- Total de estadísticas -->
                         <li class="{{ stat_colors.total.0 }}">Total:
                             {{ comparison.pokemon_1.hp|add:comparison.pokemon_1.attack|add:comparison.pokemon_1.defense|add:comparison.pokemon_1.special_attack|add:comparison.pokemon_1.special_defense|add:comparison.pokemon_1.speed }}
                         </li>
                     </ul>
                 </div>
 
+                <!-- Información del segundo Pokémon -->
                 <div id="pokemon_2" class="pokemon-column">
                     <h3>{{ comparison.pokemon_2.name }}</h3>
                     <img src="{{ comparison.pokemon_2.sprite_default }}" alt="{{ comparison.pokemon_2.name }}">
@@ -60,6 +81,7 @@
                         <li class="{{ stat_colors.special_attack.1 }}">Atq. Esp.: {{ comparison.pokemon_2.special_attack }}</li>
                         <li class="{{ stat_colors.special_defense.1 }}">Def. Esp.: {{ comparison.pokemon_2.special_defense }}</li>
                         <li class="{{ stat_colors.speed.1 }}">Velocidad: {{ comparison.pokemon_2.speed }}</li>
+                        <!-- Total de estadísticas -->
                         <li class="{{ stat_colors.total.1 }}">Total:
                             {{ comparison.pokemon_2.hp|add:comparison.pokemon_2.attack|add:comparison.pokemon_2.defense|add:comparison.pokemon_2.special_attack|add:comparison.pokemon_2.special_defense|add:comparison.pokemon_2.speed }}
                         </li>
@@ -68,6 +90,25 @@
             </div>
         </div>
     {% endif %}
+
+    {% if last_comparisons %}
+        <!-- Sección que muestra las últimas comparaciones realizadas -->
+        <div class="last-comparisons">
+            <h2>Últimas comparaciones</h2>
+            <ul>
+                {% for comp in last_comparisons %}
+                    <li>
+                        {{ comp.pokemon_1.name }} vs {{ comp.pokemon_2.name }} —
+                        {% if comp.is_draw %}
+                            <strong>Empate</strong>
+                        {% else %}
+                            Ganador: <strong>{{ comp.winner.name }}</strong>
+                        {% endif %}
+                        <span class="timestamp">({{ comp.created_at|date:"d/m/Y H:i" }})</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
 {% endblock %}
-
-

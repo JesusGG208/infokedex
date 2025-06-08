@@ -1,14 +1,17 @@
+/* Animación para transiciones suaves al aparecer elementos */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
+/* Centra y limita el ancho del formulario y la sección derecha */
 form,
 .right-side {
     max-width: 1200px;
     margin: 2rem auto;
 }
 
+/* Título principal de la página */
 h1 {
     text-align: center;
     font-size: 2.8rem;
@@ -19,6 +22,7 @@ h1 {
     font-family: inherit;
 }
 
+/* Línea decorativa bajo el título */
 h1::after {
     content: "";
     display: block;
@@ -29,6 +33,7 @@ h1::after {
     border-radius: 2px;
 }
 
+/* Estilo para mostrar errores del formulario */
 .errorlist {
     list-style: none;
     text-align: center;
@@ -40,14 +45,14 @@ h1::after {
     padding: 0;
 }
 
-/* Contenedor principal del contenido: form a la izquierda, resultado y pokémon a la derecha */
+/* Contenedor flexible que separa formulario y resultado */
 .content-wrapper {
     display: flex;
     gap: 2rem;
     align-items: flex-start;
 }
 
-/* Formulario a la izquierda, con ancho fijo o relativo */
+/* Formulario estilizado a la izquierda */
 form {
     background: #fff;
     padding: 2rem 2.5rem;
@@ -57,10 +62,12 @@ form {
     min-width: 280px;
 }
 
+/* Estilo individual para cada campo del formulario */
 .form-group {
     margin-bottom: 1.5rem;
 }
 
+/* Etiqueta de campo del formulario */
 .form-group label {
     display: block;
     font-weight: 600;
@@ -69,6 +76,7 @@ form {
     font-size: 1.1rem;
 }
 
+/* Inputs y selects del formulario */
 .form-group select,
 .form-group input[type="text"],
 .form-group input[type="search"] {
@@ -81,6 +89,7 @@ form {
     outline-offset: 2px;
 }
 
+/* Resalta el campo activo */
 .form-group select:focus,
 .form-group input[type="text"]:focus,
 .form-group input[type="search"]:focus {
@@ -88,7 +97,8 @@ form {
     box-shadow: 0 0 0 3px var(--pokemon-red);
 }
 
-.btn-compare {
+/* Botones de comparar y limpiar */
+.btn-compare, .btn-clear {
     background: linear-gradient(135deg, #FF1A1A, #3B5BA7);
     color: white;
     font-weight: 700;
@@ -103,14 +113,15 @@ form {
     margin: 0 auto;
 }
 
-.btn-compare:hover {
+/* Efecto hover en botones */
+.btn-compare:hover , .btn-clear:hover {
     background: linear-gradient(135deg, #3B5BA7, #FF1A1A);
     transform: translateY(-3px);
     box-shadow: 0 8px 22px rgba(25, 118, 210, 0.7);
     outline: none;
 }
 
-/* Contenedor derecho que incluye resultado y tarjetas */
+/* Contenedor del lado derecho con los resultados */
 .right-side {
     flex: 1 1 65%;
     display: flex;
@@ -118,21 +129,24 @@ form {
     gap: 1.5rem;
 }
 
-/* El resultado del ganador o empate, arriba */
+/* Anuncio del ganador o empate */
 .winner-announcement {
+    background-color: gray;
+    border-radius: 10px;
     text-align: center;
     animation: fadeIn 0.6s ease forwards;
-    margin-bottom: 1rem;
+    margin: 0 1rem;
 }
 
+/* Texto del anuncio del ganador */
 .winner-announcement h2 {
     font-size: 2.4rem;
-    color: #FFCB05;
+    color: var(--pokemon-yellow);
     font-weight: 900;
     text-shadow: 1px 1px 5px rgba(0,0,0,0.3);
 }
 
-/* Contenedor de las tarjetas pokémon lado a lado */
+/* Comparación visual lado a lado */
 .comparison-result {
     display: flex;
     justify-content: space-between;
@@ -141,7 +155,7 @@ form {
     animation: fadeIn 0.5s ease forwards;
 }
 
-/* Tarjetas de Pokémon */
+/* Tarjeta individual de cada Pokémon */
 .pokemon-column {
     flex: 1 1 48%;
     background: #fff;
@@ -155,11 +169,13 @@ form {
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* Efecto hover en tarjeta Pokémon */
 .pokemon-column:hover {
     border-color: #FFCB05;
     box-shadow: 0 12px 28px rgba(251, 192, 45, 0.4);
 }
 
+/* Nombre del Pokémon */
 .pokemon-column h3 {
     font-size: 2rem;
     color: #1D2C5E;
@@ -168,6 +184,7 @@ form {
     text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
 }
 
+/* Sprite del Pokémon */
 .pokemon-column img {
     width: 150px;
     height: 150px;
@@ -176,10 +193,12 @@ form {
     transition: transform 0.3s ease;
 }
 
+/* Animación al pasar el cursor sobre el sprite */
 .pokemon-column img:hover {
     transform: scale(1.1);
 }
 
+/* Lista de estadísticas */
 .comparison-result ul {
     list-style: none;
     padding: 0;
@@ -188,6 +207,7 @@ form {
     text-align: left;
 }
 
+/* Estilos individuales de cada estadística */
 .comparison-result li {
     font-weight: 600;
     font-size: 1.1rem;
@@ -196,6 +216,7 @@ form {
     transition: color 0.3s ease, font-weight 0.3s ease;
 }
 
+/* Estadística total destacada */
 .comparison-result li.total {
     font-weight: 700;
     font-size: 1.2rem;
@@ -203,17 +224,63 @@ form {
     margin-top: 0.5rem;
 }
 
+/* Estilo si una estadística es mejor */
 .stat-better {
     color: green;
     font-weight: bold;
 }
 
+/* Estilo si una estadística es peor */
 .stat-worse {
     color: red;
     font-weight: bold;
 }
 
-/* Responsive */
+/* Historial de comparaciones */
+.last-comparisons {
+    margin: 2rem auto;
+    padding: 1.5rem 2rem;
+    background: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+    max-width: 800px;
+}
+
+/* Título del historial */
+.last-comparisons h2 {
+    font-size: 1.8rem;
+    color: #1D2C5E;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+/* Lista del historial */
+.last-comparisons ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Elementos individuales del historial */
+.last-comparisons li {
+    padding: 0.5rem 0;
+    font-size: 1.1rem;
+    border-bottom: 1px solid #ddd;
+    color: #333;
+}
+
+.last-comparisons li:last-child {
+    border-bottom: none;
+}
+
+/* Marca temporal del historial */
+.last-comparisons .timestamp {
+    color: #888;
+    font-size: 0.9rem;
+    margin-left: 0.5rem;
+}
+
+/* Diseño responsive */
 @media (max-width: 768px) {
     h1 {
         font-size: 2rem;
@@ -263,12 +330,16 @@ form {
 }
 
 @media (max-width: 480px) {
-    .container > h1 {
-        font-size: 2rem;
+    form {
+        margin: 0 1rem;
     }
 
     .btn-primary {
         width: 100%;
         padding: 1rem;
+    }
+
+    .last-comparisons {
+        margin: 1rem 1rem;
     }
 }
