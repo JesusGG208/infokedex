@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Iniciar sesión{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'auth.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section class="auth-section">
+    <div class="container-auth">
+        <h1>Iniciar sesión</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            {{ form.as_p }}
+            <button type="submit">Entrar</button>
+        </form>
+        <p class="help-text">¿No tienes cuenta? <a href="{% url 'pokemon:register' %}">Regístrate aquí</a>.</p>
+    </div>
+    </section>
+{% endblock %}

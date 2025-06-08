@@ -1,0 +1,161 @@
+/* Animación de entrada para elementos con efecto de desvanecimiento */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Fondo de pantalla con gradiente de colores Pokémon */
+body {
+    background: linear-gradient(135deg, var(--pokemon-red), var(--pokemon-dark-blue));
+}
+
+/* Contenedor flexible para centrar el formulario verticalmente */
+.auth-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 80px);
+}
+
+/* Tarjeta principal del formulario con sombra y animación */
+.container-auth {
+    background: #ffffff;
+    padding: 2.5rem 3rem;
+    border-radius: 18px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    max-width: 450px;
+    width: 90%;
+    animation: fadeIn 0.6s ease;
+    text-align: center;
+}
+
+/* Título principal con estilo Pokémon */
+.container-auth h1 {
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: #1D2C5E;
+    margin-bottom: 1.5rem;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Línea decorativa amarilla bajo el título */
+.container-auth h1::after {
+    content: "";
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: #FFCB05;
+    margin: 15px auto;
+    border-radius: 2px;
+}
+
+/* Formulario organizado en columna con espacio entre elementos */
+.container-auth form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Etiquetas de formulario con estilo azul Pokémon */
+.container-auth label {
+    text-align: left;
+    font-weight: 600;
+    color: #3B5BA7;
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+    display: block;
+}
+
+/* Campos de entrada con bordes redondeados y transición suave */
+.container-auth input[type="text"],
+.container-auth input[type="password"],
+.container-auth input[type="email"] {
+    padding: 0.85rem 1rem;
+    font-size: 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+/* Efecto de foco en campos de entrada con borde rojo */
+.container-auth input:focus {
+    border-color: #FF1A1A;
+    box-shadow: 0 0 0 3px rgba(255, 26, 26, 0.2);
+}
+
+/* Botón principal con degradado rojo-azul */
+.container-auth button {
+    background: linear-gradient(135deg, #FF1A1A, #3B5BA7);
+    color: white;
+    font-weight: bold;
+    font-size: 1.1rem;
+    padding: 0.9rem 2rem;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+/* Efecto hover del botón con degradado invertido */
+.container-auth button:hover {
+    background: linear-gradient(135deg, #3B5BA7, #FF1A1A);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Texto de ayuda con estilo secundario */
+.container-auth .help-text {
+    font-size: 0.95rem;
+    color: #666;
+    margin-top: 0.75rem;
+}
+
+/* Lista de errores con fondo rojo tenue */
+.container-auth .errorlist {
+    list-style: none;
+    margin: 0;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 0, 0, 0.1);
+    border-radius: 10px;
+    color: #c00;
+    font-weight: bold;
+    font-size: 0.95rem;
+}
+
+/* Mensaje de cierre de sesión con estilo azul oscuro */
+.container-auth p.logout-message {
+    font-size: 1.1rem;
+    color: #1D2C5E;
+    margin: 1rem 0;
+}
+
+/* Enlaces generales con color rojo Pokémon */
+.container-auth a {
+    color: #FF1A1A;
+    text-decoration: underline;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+/* Efecto hover de enlaces cambiando a azul */
+.container-auth a:hover {
+    color: #3B5BA7;
+}
+
+/* Lista de enlaces en página de logout sin padding izquierdo */
+.container-auth .logout-page-links {
+    padding-left: 0;
+}
+
+/* Elementos de lista en logout sin viñetas */
+.logout-page-links li {
+    list-style: none;
+}

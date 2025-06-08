@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Sesión cerrada{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'auth.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section class="auth-section">
+        <div class="container-auth">
+            <h1>Sesión cerrada</h1>
+            <p class="logout-message">Has cerrado sesión correctamente.</p>
+            <ul class="logout-page-links">
+                <li>
+                    <a href="{% url 'login' %}">Volver a iniciar sesión</a>
+                </li>
+                <li>
+                    <a href="{% url 'pokemon:home_page' %}">Volver al inicio</a>
+                </li>
+            </ul>
+        </div>
+    </section>
+{% endblock %}

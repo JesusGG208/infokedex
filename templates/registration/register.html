@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Registro{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'auth.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section class="auth-section">
+        <div class="container-auth">
+            <h1>Crear cuenta</h1>
+            <p>Si te registras, tendrás acceso al listado y al comparador.</p>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                {{ form.as_p }}
+                <button type="submit">Registrarse</button>
+            </form>
+            <p class="help-text">¿Ya tienes una cuenta? <a href="{% url 'login' %}">Inicia sesión</a>.</p>
+        </div>
+    </section>
+{% endblock %}
