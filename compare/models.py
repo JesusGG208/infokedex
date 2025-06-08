@@ -1,8 +1,10 @@
+from django.contrib.auth.models import User
 from django.db import models # Importa el sistema de modelos de Django
 from pokemon.models import Pokemon # Importa el modelo de Pokémon desde la app correspondiente
 
 # Modelo que representa una comparación entre dos Pokémon
 class Compare(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE,null=True, blank=True)
     pokemon_1 = models.ForeignKey(Pokemon, related_name="pokemon_1", on_delete=models.CASCADE) # Relación con el primer Pokémon
     pokemon_2 = models.ForeignKey(Pokemon, related_name="pokemon_2", on_delete=models.CASCADE) # Relación con el segundo Pokémon
     winner = models.ForeignKey(Pokemon, related_name="pokemon_winner", on_delete=models.SET_NULL, null=True, blank=True) # Pokémon ganador (puede ser nulo si hay empate o no se ha calculado aún)

@@ -11,29 +11,27 @@ class PokemonCompareView(LoginRequiredMixin, FormView):
     # Añade datos adicionales al contexto del template
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # Agrega las 5 comparaciones más recientes al contexto
-        context['last_comparisons'] = Compare.objects.order_by('-created_at')[:5]
+        # Mostrar solo las 5 últimas comparaciones del usuario actual
+        context['last_comparisons'] = Compare.objects.filter(user=self.request.user).order_by('-created_at')[:5]
         return context
 
-    # Se ejecuta si el formulario es válido (POST con datos correctos)
     def form_valid(self, form):
-        # Obtiene los dos Pokémon seleccionados en el formulario
         pokemon_1 = form.cleaned_data['pokemon_1']
         pokemon_2 = form.cleaned_data['pokemon_2']
 
-        # Crea un objeto de comparación y calcula el ganador
-        comparison = Compare(pokemon_1=pokemon_1, pokemon_2=pokemon_2)
-        comparison.calculate_winner()  # Lógica definida en el modelo
-        comparison.save()  # Guarda en la base de datos
+        # Crear la comparación asociada al usuario actual
+        comparison = Compare(pokemon_1=pokemon_1,pokemon_2=pokemon_2,user=self.request.user)
+        comparison.calculate_winner()
+        comparison.save()
 
-        # Elimina comparaciones antiguas si hay más de 5 en total
-        all_comparisons = Compare.objects.order_by('created_at')
-        if all_comparisons.count() > 5:
-            for c in all_comparisons[:all_comparisons.count() - 5]:
+        # Eliminar comparaciones antiguas de este usuario si hay más de 5
+        user_comparisons = Compare.objects.filter(user=self.request.user).order_by('created_at')
+        if user_comparisons.count() > 5:
+            for c in user_comparisons[:user_comparisons.count() - 5]:
                 c.delete()
 
-        # Prepara el contexto para renderizar la respuesta
+        # Agregar comparación al contexto para mostrar el resultado
         context = self.get_context_data(form=form)
-        context['comparison'] = comparison  # Comparación actual
-        context['stat_colors'] = comparison.get_stat_comparisons()  # Colores por estadística comparada
-        return self.render_to_response(context)  # Renderiza la plantilla con el contexto
+        context['comparison'] = comparison
+        context['stat_colors'] = comparison.get_stat_comparisons()
+        return self.render_to_response(context)
