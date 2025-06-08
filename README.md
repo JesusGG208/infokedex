@@ -8,8 +8,8 @@ Infokédex será una página web diseñada como una __*Pokédex interactiva*__,
 que recopilará información detallada sobre los más de 1000 Pokémon existentes. 
 Incluirá datos como su **apariencia**, **estadísticas** y **evoluciones**. 
 Contará con un buscador que permitirá filtrar Pokémon por nombre, tipo o 
-posición en su cadena evolutiva. Además, ofrecerá un minijuego similar a Wordle, 
-en el que los usuarios deberán adivinar un Pokémon específico a partir de pistas.
+posición en su cadena evolutiva. Además, ofrecerá un minijuego en el que tendrás 
+que adivinar el tipo del pokémon.
 
 ## Finalidad
 Infokédex tendrá varias finalidades, como proporcionar información 
@@ -38,8 +38,8 @@ El desarrollo del proyecto tendrá una duración aproximada de 3 meses,
 siguiendo estas fases:
 1. **Planificación y estructura de la página** ✅(**Hecho**)
 2. **Desarrollo del Backend y Frontend con Django** ✅(**Hecho**)
-3. **Implementación de Docker y Django REST Framework** ❌(**Por hacer**)
-   - Dockerizar el proyecto: hacer el docker-compose, el Dockerfile y el requirements.txt.
+3. **Implementación de Docker y Django REST Framework** 🟧(**Por hacer**)
+   - El proyecto está dockerizado.
    - Utilzar el Django Rest Framework.
 4. **Pruebas finales** ❌(**Por hacer**)
 
