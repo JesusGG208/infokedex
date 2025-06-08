@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="{% static 'pokemon_detail.css' %}">
     {% endblock %}
 
+    <!-- Header -->
     <header class="pokemon-header">
         <h1>#{{ pokemon.pokedex_id }} - {{ pokemon.name }}</h1>
         <div class="type-container">
@@ -25,29 +26,35 @@
         </div>
     </header>
 
+    <!-- Aspectos, descripción y habilidades -->
     <div class="pokemon-main-info">
         <div class="pokemon-images-container">
             <h2>Apariencia</h2>
+            <!-- Las diferentes apariencias se enseñan mediante un carrusel -->
             <div id="carouselAppearance" class="carousel slide pointer-event" data-bs-ride="carousel">
                 <div class="carousel-inner carousel-appearance-items">
+                    <!-- Su apariencia común -->
                     <div class="carousel-item carousel-appearance-item active">
                         <img src="{{ pokemon.official_artwork_default }}" class="d-block pokemon-artwork" alt="{{ pokemon.name }}">
                         <div class="carousel-caption d-md-block bg-dark bg-opacity-50 rounded">
                             <h5>Apariencia normal</h5>
                         </div>
                     </div>
+                    <!-- Su apariencia shiny -->
                     <div class="carousel-item carousel-appearance-item">
                         <img src="{{ pokemon.official_artwork_shiny }}" class="d-block pokemon-artwork" alt="{{ pokemon.name }} shiny">
                         <div class="carousel-caption d-md-block bg-dark bg-opacity-50 rounded">
                             <h5>Apariencia shiny</h5>
                         </div>
                     </div>
+                    <!-- El sprite en los videojuegos de la apariencia común -->
                     <div class="carousel-item carousel-appearance-item">
                         <img src="{{ pokemon.sprite_default }}" class="d-block pokemon-sprite" alt="sprite {{ pokemon.name }}">
                         <div class="carousel-caption d-md-block bg-dark bg-opacity-50 rounded">
                             <h5>Sprite de los videojuegos</h5>
                         </div>
                     </div>
+                    <!-- El sprite en los videojuegos de la apariencia shiny -->
                     <div class="carousel-item carousel-appearance-item">
                         <img src="{{ pokemon.sprite_shiny }}" class="d-block pokemon-sprite" alt="sprite {{ pokemon.name }} shiny">
                         <div class="carousel-caption d-md-block bg-dark bg-opacity-50 rounded">
@@ -66,11 +73,13 @@
             </div>
         </div>
         <div class="pokemon-main-text-info">
+            <!-- Descripción (según la Pokédex) -->
             <div class="pokemon-description">
                 <h2>Descripción</h2>
                 <p>{{ pokemon.description }}</p>
             </div>
 
+            <!-- Habilidades normales y ocultas -->
             <div class="abilities-section">
             <h2>Habilidades</h2>
             <h3>Normal</h3>
@@ -94,9 +103,11 @@
         </div>
     </div>
 
+    <!-- La línea evolutiva -->
     <div class="evolution-section">
         <h2>Línea evolutiva completa</h2>
         <div class="evolution-line">
+            <!-- Las preevoluciones -->
             {% if preevolutions %}
                 <div class="evolution-block">
                     <h3>Preevoluciona de</h3>
@@ -114,6 +125,7 @@
                 </div>
             {% endif %}
 
+            <!-- La posición de la línea evolutiva que se toma como referencia entre las preevoluciones y las evoluciones -->
             <div class="evolution-current">
                 <h3>Actual</h3>
                 <div class="evolution-card current">
@@ -125,9 +137,11 @@
                 {% endif %}
             </div>
 
+            <!-- Las evoluciones -->
             {% if evolutions %}
                 <div class="evolution-block">
                     <h3>Evoluciona a</h3>
+                    <!-- En caso de que tenga más de 2 evoluciones, se ponen en un carrusel -->
                     {% if evolutions|length > 2 %}
                         <div id="carouselEvolution" class="carousel slide" data-bs-ride="carousel">
                             <div class="carousel-inner carousel-evolution-items">
@@ -154,6 +168,7 @@
                                 <span class="visually-hidden">Siguiente</span>
                             </button>
                         </div>
+                    <!-- Si no es el caso, se muestran tal cual -->
                     {% else %}
                         <div class="d-flex flex-wrap justify-content-center gap-3">
                             {% for evo in evolutions %}
@@ -174,6 +189,7 @@
         </div>
     </div>
 
+    <!-- La tabla con las stats -->
     <div class="stats-section">
         <h2>Stats base</h2>
         <table class="stats-table">
@@ -184,6 +200,7 @@
                 </tr>
             </thead>
             <tbody>
+                <!-- Stat de puntos de vida -->
                 <tr>
                     <td class="stat-name">PS</td>
                     <td class="stat-value">{{ pokemon.hp }}</td>
@@ -193,6 +210,7 @@
                         </div>
                     </td>
                 </tr>
+                <!-- Stat de ataque físico -->
                 <tr>
                     <td class="stat-name">Ataque</td>
                     <td class="stat-value">{{ pokemon.attack }}</td>
@@ -202,6 +220,7 @@
                         </div>
                     </td>
                 </tr>
+                <!-- Stat de defensa física -->
                 <tr>
                     <td class="stat-name">Defensa</td>
                     <td class="stat-value">{{ pokemon.defense }}</td>
@@ -211,6 +230,7 @@
                         </div>
                     </td>
                 </tr>
+                <!-- Stat de ataque especial -->
                 <tr>
                     <td class="stat-name">Ataque Especial</td>
                     <td class="stat-value">{{ pokemon.special_attack }}</td>
@@ -220,6 +240,7 @@
                         </div>
                     </td>
                 </tr>
+                <!-- Stat de defensa especial -->
                 <tr>
                     <td class="stat-name">Defensa Especial</td>
                     <td class="stat-value">{{ pokemon.special_defense }}</td>
@@ -229,6 +250,7 @@
                         </div>
                     </td>
                 </tr>
+                <!-- Stat de velocidad -->
                 <tr>
                     <td class="stat-name">Velocidad</td>
                     <td class="stat-value">{{ pokemon.speed }}</td>
@@ -242,6 +264,7 @@
         </table>
     </div>
 
+    <!-- Dos enlaces para volver al inicio o al listado -->
     <div class="back-nav">
         <a href="{% url 'pokemon:home_page' %}" class="back-link">Volver al inicio</a>
         <a href="{% url 'pokemon:pokemon_list' %}" class="back-link">Volver al listado</a>
