@@ -1,14 +1,22 @@
 import random  # Importa random para mezclar listas
+
+from django.contrib.auth.forms import UserCreationForm
 from django.http import JsonResponse  # Para devolver respuestas tipo JSON
+from django.urls import reverse_lazy
 from django.views import View  # Vista base para manejar métodos como GET o POST
-from django.views.generic import DetailView, ListView, TemplateView  # Vistas predefinidas
+from django.views.generic import DetailView, ListView, TemplateView, CreateView  # Vistas predefinidas
 from django.db.models import Q, Prefetch  # Q permite hacer búsquedas OR. Prefetch mejora eficiencia
 from django.shortcuts import render  # Para renderizar plantillas HTML
 from pokemon.models import Pokemon, Type, PokemonType, Ability  # Se importan los modelos
 from django.contrib.auth.mixins import LoginRequiredMixin # Si el usuario no está autenticado, se redirige a la página de login.
 
+# Vista para registrar un usuario
+class RegistroUsuarioView(CreateView):
+    template_name = "registration/register.html"
+    form_class = UserCreationForm
+
 # Vista que muestra la página principal con 10 Pokémon al azar
-class HomePageView(LoginRequiredMixin, TemplateView):
+class HomePageView(TemplateView):
     template_name = 'all_templates/home.html'
 
     def get_context_data(self, **kwargs):
@@ -88,7 +96,7 @@ class PokemonListView(LoginRequiredMixin, ListView):
 
 
 # Vista para mostrar la información completa de un Pokémon específico
-class PokemonDetailView(LoginRequiredMixin, DetailView):
+class PokemonDetailView(DetailView):
     model = Pokemon
     template_name = 'all_templates/pokemon_detail.html'
 
@@ -117,7 +125,7 @@ class PokemonDetailView(LoginRequiredMixin, DetailView):
 
 
 # Vista para mostrar los detalles de una habilidad en particular
-class AbilityDetailView(LoginRequiredMixin, DetailView):
+class AbilityDetailView(DetailView):
     model = Ability
     template_name = 'all_templates/ability_detail.html'
     context_object_name = 'ability'
