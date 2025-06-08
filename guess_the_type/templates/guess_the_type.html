@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Guess the type Game{% endblock %}
+
+{% block content %}
+
+    {% block extra_css %}
+        <link rel="stylesheet" href="{% static 'guess_the_type.css' %}">
+    {% endblock %}
+
+    <div class="pokemon-card">
+        {% if pokemon %}
+            <!-- Mostramos el nombre e imagen del Pokémon actual -->
+            <h2>¿Qué tipo tiene <strong>{{ pokemon.name }}</strong>?</h2>
+            <img src="{{ pokemon.official_artwork_default }}" alt="{{ pokemon.name }}">
+        {% endif %}
+
+        <!-- Formulario principal para que el usuario seleccione una opción -->
+        <form method="post">
+            {% csrf_token %}
+
+            <!-- Campo oculto con el ID del Pokémon -->
+            {{ form.pokemon_id }}
+
+            <!-- Campo oculto con las opciones que se generaron aleatoriamente -->
+            <input type="hidden" name="options_list" value="{{ form.initial.options_list }}">
+
+            <div class="options">
+                <!-- Mostramos cada opción como un botón de radio -->
+                {% for option, label in form.fields.selected_option.widget.choices %}
+                    <div>
+                        <label>
+                            <input type="radio" name="selected_option" value="{{ option }}" required
+                                   {% if option == selected_option %}checked{% endif %}>
+                            {{ label }}
+                        </label>
+                    </div>
+                {% endfor %}
+            </div>
+
+            {% if not answered %}
+                <!-- Botón para enviar la respuesta -->
+                <button type="submit" class="answer">Responder</button>
+            {% endif %}
+        </form>
+
+        {% if answered %}
+            <!-- Resultado mostrado después de responder -->
+            <div class="result {% if is_correct %}correct{% else %}incorrect{% endif %}">
+                {% if is_correct %}
+                    <!-- Mensaje si la respuesta es correcta -->
+                    ✅ ¡Correcto! {{ pokemon.name }} es de tipo {{ correct_answer }}.
+                {% else %}
+                    <!-- Mensaje si la respuesta es incorrecta -->
+                    ❌ Incorrecto. {{ pokemon.name }} es de tipo {{ correct_answer }}.
+                {% endif %}
+            </div>
+
+            <!-- Botón para jugar otra ronda -->
+            <form method="get">
+                <button type="submit">Jugar otra vez</button>
+            </form>
+        {% endif %}
+    </div>
+{% endblock %}
