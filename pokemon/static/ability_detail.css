@@ -1,3 +1,4 @@
+/* Título principal centrado y con sombra suave */
 h1 {
     text-align: center;
     font-size: 2.8rem;
@@ -7,6 +8,7 @@ h1 {
     text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
 }
 
+/* Línea decorativa amarilla debajo del h1 */
 h1::after {
     content: "";
     display: block;
@@ -17,6 +19,7 @@ h1::after {
     border-radius: 2px;
 }
 
+/* Subtítulo centrado con estilo similar al h1 */
 h2 {
     text-align: center;
     font-size: 2.2rem;
@@ -26,6 +29,7 @@ h2 {
     text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
 }
 
+/* Línea decorativa más delgada debajo del h2 */
 h2::after {
     content: "";
     display: block;
@@ -36,7 +40,7 @@ h2::after {
     border-radius: 2px;
 }
 
-/* Ability Description */
+/* Párrafos descriptivos centrados con máximo ancho */
 p {
     max-width: 800px;
     margin: 0 auto;
@@ -45,10 +49,10 @@ p {
     text-align: center;
 }
 
-/* Pokémon List */
+/* Contenedor en forma de lista para los Pokémon */
 .pokemon-list {
     list-style: none;
-    padding: 0 32px 0 32px;
+    padding: 0 32px;
     max-width: 900px;
     margin: 2rem auto;
     display: grid;
@@ -56,6 +60,7 @@ p {
     gap: 2rem;
 }
 
+/* Estilo de cada tarjeta de Pokémon */
 .pokemon .pokemon-link {
     display: block;
     background: white;
@@ -71,6 +76,7 @@ p {
     overflow: hidden;
 }
 
+/* Barra superior decorativa con degradado */
 .pokemon .pokemon-link::before {
     content: "";
     position: absolute;
@@ -81,12 +87,14 @@ p {
     background: linear-gradient(90deg, var(--pokemon-yellow) 0%, var(--pokemon-green) 100%);
 }
 
+/* Efecto hover que eleva la tarjeta */
 .pokemon .pokemon-link:hover {
     transform: translateY(-5px);
     background: #fdfdfd;
     box-shadow: 0 8px 20px rgba(0,0,0,0.08);
 }
 
+/* Imagen del Pokémon con tamaño y ajuste fijo */
 .pokemon .pokemon-link img {
     width: 120px;
     height: 120px;
@@ -94,11 +102,13 @@ p {
     transition: transform 0.3s ease;
 }
 
+/* Color del texto debajo de la imagen */
 .pokemon-link p {
     color: var(--pokemon-dark-blue);
 }
 
-/* Responsive Layout */
+/* Diseño responsive */
+
 @media (max-width: 768px) {
     h1 {
         font-size: 2rem;

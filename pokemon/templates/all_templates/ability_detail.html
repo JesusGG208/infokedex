@@ -4,18 +4,24 @@
 
 {% block content %}
     {% block extra_css %}
-         <link rel="stylesheet" href="{% static 'ability_detail.css' %}">
+        <link rel="stylesheet" href="{% static 'ability_detail.css' %}">
     {% endblock %}
 
+    <!-- Título principal con el nombre de la habilidad -->
     <h1>{{ ability.name }}</h1>
+
+    <!-- Descripción o efecto de la habilidad -->
     <p>{{ ability.effect }}</p>
 
+    <!-- Lista que muestra los Pokémon que poseen esta habilidad -->
     <h2>Pokémon que tienen esta habilidad</h2>
     <ul class="pokemon-list">
         {% for pokemon in pokemon_list %}
             <li class="pokemon">
                 <a href="{% url 'pokemon:pokemon_detail' pokemon.id %}" class="pokemon-link">
+                    <!-- Imagen oficial del Pokémon -->
                     <img src="{{ pokemon.official_artwork_default }}" alt="{{ pokemon.name }}">
+                    <!-- Nombre del Pokémon -->
                     <p>{{ pokemon.name }}</p>
                 </a>
             </li>
