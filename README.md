@@ -23,6 +23,15 @@ La realización de este proyecto será mucho más díficil que la de
 **"Juego Tierra Media"** de DWES, ya que es un proyecto en solitario. 
 Esto me ha brindado un desafío individual.
 
+## Estructura del proyecto:
+El proyecto tiene 3 aplicaciones:
+- Pokémon
+- Compare
+- Guess the Type
+
+## Ejemplo de uso:
+- [Vídeo del ejemplo de uso](https://docs.google.com/document/d/1BEH45xROe2GPVugnBI5xSEPj3WAVwbsoft4em3WkPYg/edit?usp=sharing)
+
 ## Medios Hardware y Software a Utilizar
 Los recursos que utilizaré serán los siguientes:
 - **Hardware:** PC y dispositivos móviles para pruebas y desarrollo.
@@ -38,8 +47,8 @@ El desarrollo del proyecto tendrá una duración aproximada de 3 meses,
 siguiendo estas fases:
 1. **Planificación y estructura de la página** ✅(**Hecho**)
 2. **Desarrollo del Backend y Frontend con Django** ✅(**Hecho**)
-3. **Implementación de Docker** ✅(**Por hacer**)
-4. **Pruebas finales** ❌(**Por hacer**)
+3. **Implementación de Docker** ✅(**Hecho**)
+4. **Pruebas finales** ✅(**Hecho**)
 
 ## Trabajos realizados
 El proyecto tiene 3 aplicaciones: **Pokémon**, **Compare** y **Guess The Type**.
