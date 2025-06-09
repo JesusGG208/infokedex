@@ -1,7 +1,7 @@
 # Infokédex
 
 ## Autor del Proyecto
-Jesús Gómez
+Jesús Gómez García
 
 ## Introducción
 Infokédex será una página web diseñada como una __*Pokédex interactiva*__, 
