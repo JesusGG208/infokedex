@@ -21,7 +21,7 @@ de entretenimiento para todos los usuarios interesados en los Pokémon.
 El desarrollo de este proyecto me permitirá mejorar mis conocimientos. 
 La realización de este proyecto será mucho más díficil que la de 
 **"Juego Tierra Media"** de DWES, ya que es un proyecto en solitario. 
-Esto me brindará un desafío individual.
+Esto me ha brindado un desafío individual.
 
 ## Medios Hardware y Software a Utilizar
 Los recursos que utilizaré serán los siguientes:
@@ -30,7 +30,7 @@ Los recursos que utilizaré serán los siguientes:
   - Lenguajes de programación: **Python**, **JavaScript**, **HTML**, **CSS** y **Bootstrap**.
   - Framework: **Django**.
   - Base de datos: **PostgreSQL**.
-  - Herramientas adicionales: **Docker** y **API REST**.
+  - Herramientas adicionales: **Docker**.
   - Entornos de desarrollo: **PyCharm** y **Visual Studio Code**.
 
 ## Planificación
@@ -38,9 +38,7 @@ El desarrollo del proyecto tendrá una duración aproximada de 3 meses,
 siguiendo estas fases:
 1. **Planificación y estructura de la página** ✅(**Hecho**)
 2. **Desarrollo del Backend y Frontend con Django** ✅(**Hecho**)
-3. **Implementación de Docker y Django REST Framework** 🟧(**Por hacer**)
-   - El proyecto está dockerizado.
-   - Utilzar el Django Rest Framework.
+3. **Implementación de Docker** ✅(**Por hacer**)
 4. **Pruebas finales** ❌(**Por hacer**)
 
 ## Trabajos realizados
